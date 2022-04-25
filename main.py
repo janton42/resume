@@ -7,17 +7,18 @@
 """
 DOCSTRING
 """
-from PyPDF2 import PdfFileReader
-import nltk
+from utils import pdfParser
+from vars import pdfTypes
+
 
 
 def main():
-    with open('./static/resumeTemplate.pdf','rb') as file:
-        reader = PdfFileReader(file)
-        print(reader.numPages)
-        contents = reader.getPage(3).extractText().split('\n')
-        print(contents)
-        pass
+    fileType = input('Please enter a File Type: ')
+    if fileType in pdfTypes:
+        filename = input('Please enter a file name: ')
+        pageNumber = input('Please enter a page number: ')
+        pageNumber = int(pageNumber) - 1
+        pdfParser(filename, pageNumber)
 
 if __name__ == '__main__':
     main()
