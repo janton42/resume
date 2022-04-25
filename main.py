@@ -1,8 +1,9 @@
 #!/bin/python3
 
-def main():
-    print('Hello World')
+import nltk
 
+def main():
+    return 'All your base are belong to us.'
 
 if __name__ == '__main__':
-    main()
+    print(main())
