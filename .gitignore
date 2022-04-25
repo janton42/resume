@@ -132,3 +132,5 @@ investotron/
 db/
 *.db
 api.py
+
+/dev
