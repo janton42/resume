@@ -7,18 +7,29 @@
 """
 DOCSTRING
 """
-from utils import pdfParser
-from vars import pdfTypes
-
-
+import utils
+import vars
 
 def main():
     fileType = input('Please enter a File Type: ')
-    if fileType in pdfTypes:
+    if fileType in vars.pdfTypes:
         filename = input('Please enter a file name: ')
         pageNumber = input('Please enter a page number: ')
         pageNumber = int(pageNumber) - 1
-        pdfParser(filename, pageNumber)
+        utils.pdfParser(filename, pageNumber)
+    elif fileType in vars.txtTypes:
+        filename = input('Please enter a file name: ')
+        utils.txtParser(filename)
+    elif fileType in vars.keyWords:
+        filename = input('Please enter a file name: ')
+        pageNumber = input('Please enter a page number: ')
+        pageNumber = int(pageNumber) - 1
+        extracted = utils.pdfParser(filename, pageNumber)
+        utils.harvardKeyworder(extracted)
+
+    else:
+        print('Enter a valid file type (currently .pdf and txt are supported)')
+        main()
 
 if __name__ == '__main__':
     main()

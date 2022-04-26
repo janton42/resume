@@ -9,6 +9,8 @@ DOCSTRING
 """
 
 pdfTypes = {'pdf', '.pdf','PDF','.PDF','Portable Document Format','portable document format', 'pdf file'}
+txtTypes = {'txt', 'text', '.txt','plain text'}
+keyWords = {'Keyword', 'kwords','keywords','keyword','kword','keyWord','KeyWord','keyWords'}
 
 devFilesPath = './dev/'
 
