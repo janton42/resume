@@ -11,6 +11,7 @@ import vars
 import os
 import csv
 
+
 from PyPDF2 import PdfFileReader
 from nltk.tokenize import WhitespaceTokenizer
 

@@ -14,4 +14,4 @@ keyWords = {'Keyword', 'kwords','keywords','keyword','kword','keyWord','KeyWord'
 
 devFilesPath = './dev/'
 
-devJdFilePaff = devFilesPath + 'jds/'
+devJdFilePath = devFilesPath + 'jds/'
