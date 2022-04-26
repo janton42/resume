@@ -11,25 +11,10 @@ import utils
 import vars
 
 def main():
-    fileType = input('Please enter a File Type: ')
-    if fileType in vars.pdfTypes:
-        filename = input('Please enter a file name: ')
-        pageNumber = input('Please enter a page number: ')
-        pageNumber = int(pageNumber) - 1
-        utils.pdfParser(filename, pageNumber)
-    elif fileType in vars.txtTypes:
-        filename = input('Please enter a file name: ')
-        utils.txtParser(filename)
-    elif fileType in vars.keyWords:
-        filename = input('Please enter a file name: ')
-        pageNumber = input('Please enter a page number: ')
-        pageNumber = int(pageNumber) - 1
-        extracted = utils.pdfParser(filename, pageNumber)
-        utils.harvardKeyworder(extracted)
-
-    else:
-        print('Enter a valid file type (currently .pdf and txt are supported)')
-        main()
+    filename = 'resumeTemplate.pdf'
+    pageNumber = 3
+    extracted = utils.pdfParser(filename, pageNumber)
+    utils.harvardKeyworder(extracted)
 
 if __name__ == '__main__':
     main()

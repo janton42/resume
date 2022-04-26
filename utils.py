@@ -82,11 +82,10 @@ def create_csv(generator,filename):
 def harvardKeyworder(wordlist):
     tk = WhitespaceTokenizer()
     tokens = tk.tokenize(wordlist)
-    # for t in tokens:
-    #     if tokens.index(t) >= 585 and tokens.index(t) < 1045:
-    #         output = str(wordlist.index(t)) + ' ' + t
-    #         print(output)
-        # if t.isupper():
-        #     output = str(wordlist.index(t)) + ' ' + t
-        #     print(output)
-    return
+    output = []
+    for t in tokens:
+        output.append([t])
+    output_path = vars.devFilesPath + 'harvard_tokens.csv'
+    with open(output_path, 'w') as csvFile:
+        writer = csv.writer(csvFile)
+        writer.writerows(output)
