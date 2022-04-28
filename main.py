@@ -9,7 +9,7 @@ DOCSTRING
 """
 import utils
 import vars
-import jdPreprocess
+
 
 def main():
     # Create a spreadsheet from the Hearvard Resume template verbs to
@@ -18,7 +18,7 @@ def main():
     # pageNumber = 3
     # extracted = utils.pdfParser(filename, pageNumber)
     # utils.harvardKeyworder(extracted)
-    jdPreprocess.fetchBaseData()
+    utils.countVectorize()
 
 
 if __name__ == '__main__':
