@@ -29,3 +29,23 @@ patterns = [
 ]
 
 verb_tags = ['VB','VBG','VBD', 'VBN']
+nonsense = ['work', 'involv','look','join','achiev']
+
+pm_jd_filenames = [
+    'prog_man_learn_sys_github_clean.txt',
+    'prog_man_plus_clean.txt',
+    'prog_man_tradedesk_clean.txt',
+    'prog_man_whatsapp_clean.txt'
+]
+
+ana_man_filenames = [
+    'anal_insights_man_clean.txt',
+    'cust_anal_man_nextdoor_clean.txt',
+    'data_anal_man_bailielumber_clean.txt',
+    'people_anal_man_pwc_clean.txt',
+    'strat_insights_anal_man_newtonx_clean.txt'
+]
+
+intel_analyst_filenames = [
+    'intel_analyst_alliedunited_clean.txt'
+]
