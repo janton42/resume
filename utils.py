@@ -186,3 +186,10 @@ def verbStemmer(tagged_sents):
             count += 1
             verbs[count] = ps.stem(word)
     return verbs
+
+def verbFinder(filename):
+    text = txtParser(vars.devJdFilePath + filename)
+    sentences = text.split('.')
+    tagged_sents = tagger(sentences)
+    stems = verbStemmer(tagged_sents)
+    return stems

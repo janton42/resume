@@ -26,10 +26,19 @@ def main():
     # Feature creation
     # utils.featureTextLength(data)
     # utils.makeHist(data)
-    text = utils.txtParser(vars.devJdFilePath + 'am5a.txt')
-    sentences = text.split('.')
-    tagged_sents = utils.tagger(sentences)
-    print(utils.verbStemmer(tagged_sents))
+    am4 = 'am4a.txt'
+    am5 = 'am5a.txt'
+    am6 = 'am6a.txt'
+    opsNoFit1 = 'opsNotit1a.txt'
 
+    am4verbs = utils.verbFinder(am4)
+    am5verbs = utils.verbFinder(am5)
+    am6verbs = utils.verbFinder(am6)
+    opsNoFit1verbs = utils.verbFinder(opsNoFit1)
+
+    print('{}:\n{}'.format('Analytics 4', am4verbs))
+    print('{}:\n{}'.format('Analytics 5', am5verbs))
+    print('{}:\n{}'.format('Analytics 6', am6verbs))
+    print('{}:\n{}'.format('Operations (No Fit)', opsNoFit1verbs))
 if __name__ == '__main__':
     main()
