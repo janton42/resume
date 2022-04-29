@@ -12,13 +12,23 @@ import vars
 
 
 def main():
-    # Create a spreadsheet from the Hearvard Resume template verbs to
+    data = vars.devJdFilePath + 'job_posts.csv'
+    # Create a spreadsheet from the Harvard Resume template verbs to
     # use on your resume.
     # filename = 'resumeTemplate.pdf'
     # pageNumber = 3
     # extracted = utils.pdfParser(filename, pageNumber)
     # utils.harvardKeyworder(extracted)
-    utils.countVectorize()
+
+    # Vectorize the data
+    # utils.countVectorize()
+
+    # Feature creation
+    # utils.featureTextLength(data)
+    # utils.makeHist(data)
+    text = utils.txtParser(vars.devJdFilePath + 'am6a.txt')
+    sent = text.split('.')
+    print(sent)
 
 
 if __name__ == '__main__':

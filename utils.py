@@ -18,17 +18,19 @@ import nltk
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from PyPDF2 import PdfFileReader
 from nltk.tokenize import WhitespaceTokenizer
+from matplotlib import pyplot
+import numpy as np
 
+# pulls the text out of a pdf
 def pdfParser(filename, pageNumber):
         filePath = vars.devFilesPath + filename
         with open(filePath,'rb') as file:
             reader = PdfFileReader(file)
             pdfContents = reader.getPage(pageNumber).extractText()
             return pdfContents
-
+#pulls text from a .txt file
 def txtParser(filename):
-    filePath = vars.devFilesPath + filename
-    with open(filePath) as file:
+    with open(filename) as file:
         txtContents = file.read()
         return txtContents
 
@@ -84,6 +86,7 @@ def create_csv(generator,filename):
 		writer = csv.writer(csvFile)
 		writer.writerows(output)
 
+# removes the
 def harvardKeyworder(wordlist):
     tk = WhitespaceTokenizer()
     tokens = tk.tokenize(wordlist)
@@ -113,11 +116,11 @@ def cleanData(text):
     text = [ps.stem(word) for word in tokens if word not in stopword]
     return text
 
-def fetchBaseData():
-    data = pd.read_csv(vars.devJdFilePath + 'job_posts.csv', header=None)
+def fetchBaseData(filepath):
+    data = pd.read_csv(filepath, header=None)
     data.columns = ['label', 'body_text']
-    data['body_text_nostop'] = data['body_text'].apply(lambda x: cleanData(x.lower()))
-    print(data.head())
+    # data['body_text_nostop'] = data['body_text'].apply(lambda x: cleanData(x.lower()))
+    return data
 
 
 def countVectorize():
@@ -134,3 +137,17 @@ def countVectorize():
     X_counts_df = pd.DataFrame(X_counts.toarray())
     X_counts_df.columns = tfidfVect.get_feature_names()
     print(X_counts_df)
+
+
+def featureTextLength(filepath):
+    data = fetchBaseData(filepath)
+    data['body_len'] = data['body_text'].apply(lambda x: len(x) - x.count(' '))
+    return data
+
+def makeHist(filepath):
+    data = featureTextLength(filepath)
+    bins = np.linspace(2, 6000, 100)
+    pyplot.hist(data[data['label'] == 'nofit']['body_len'], bins,alpha=0.5, label='nofit')
+    pyplot.hist(data[data['label'] == 'fit']['body_len'], bins,alpha=0.5, label='fit')
+    pyplot.legend(loc='upper left')
+    pyplot.show()
