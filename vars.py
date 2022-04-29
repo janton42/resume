@@ -27,3 +27,5 @@ patterns = [
     (r'^-?[0-9]+(\.[0-9]+)?$','CD'),# plural nouns
     (r'.*','NN')                    # nouns (default)
 ]
+
+verb_tags = ['VB','VBG','VBD', 'VBN']

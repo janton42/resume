@@ -170,10 +170,19 @@ def tagger(text):
     # TrigramTagger can be added, but does not improve accuracy, so was
     # intentionally ommitted
     output = {}
-    count = 0
     for sentence in text:
         tokens = nltk.word_tokenize(sentence)
         tagged = dict(t2.tag(tokens))
-        output[count] = tagged
-        count += 1
+        output.update(tagged)
     return output
+
+def verbStemmer(tagged_sents):
+    ps = nltk.PorterStemmer()
+    verbs = {}
+    count = 0
+    for word in tagged_sents:
+        tag = tagged_sents[word]
+        if tag in vars.verb_tags:
+            count += 1
+            verbs[count] = ps.stem(word)
+    return verbs

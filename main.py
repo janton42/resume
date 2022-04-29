@@ -26,10 +26,10 @@ def main():
     # Feature creation
     # utils.featureTextLength(data)
     # utils.makeHist(data)
-    text = utils.txtParser(vars.devJdFilePath + 'am6a.txt')
+    text = utils.txtParser(vars.devJdFilePath + 'am5a.txt')
     sentences = text.split('.')
     tagged_sents = utils.tagger(sentences)
-    for sentence in tagged_sents:
-        print(tagged_sents[sentence])
+    print(utils.verbStemmer(tagged_sents))
+
 if __name__ == '__main__':
     main()
