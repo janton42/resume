@@ -35,59 +35,7 @@ def txtParser(filename):
         txtContents = file.read()
         return txtContents
 
-def create_working_dict(fileLocation):
-	compiledList = csv.reader(open(fileLocation, mode='r', encoding='utf-8-sig'))
-
-	dictList = {}
-	key = 0
-
-	for v in compiledList:
-	   dictList[key] = v
-	   key += 1
-
-	headers = dictList[0]
-
-	del dictList[0]
-
-	labeled = {}
-	labeledCounter = 1
-
-	for i in dictList:
-		pair = {}
-		x = 0
-		while x < len(headers):
-			k = headers[x]
-			v = dictList[i][x]
-			pair[k] = v
-			x += 1
-		labeled[labeledCounter] = pair
-		labeledCounter += 1
-
-	return labeled
-
-def create_csv(generator,filename):
-	output = []
-	headers = []
-	for i in generator:
-		for a in generator[i].keys():
-			if a not in headers:
-				headers.append(a)
-
-	output.append(headers)
-
-	for x in generator:
-		ind = []
-		for b in generator[x].values():
-			ind.append(b)
-		output.append(ind)
-
-	output_path =  vars.devFilesPath + filename + '.csv'
-
-	with open(output_path, 'w') as csvFile:
-		writer = csv.writer(csvFile)
-		writer.writerows(output)
-
-# removes the
+# removes the words from the Harvard resume
 def harvardKeyworder(wordlist):
     tk = WhitespaceTokenizer()
     tokens = tk.tokenize(wordlist)
@@ -105,15 +53,10 @@ def cleanData(text):
     stopword = nltk.corpus.stopwords.words('english')
     # initialize a stemmer
     ps = nltk.PorterStemmer()
-
     # remove punctuation
     text = ''.join([char for char in text if char not in string.punctuation])
     # tokenize
     tokens = re.split('\W+', text)
-    # make a list of stemmed non-stopwords
-    # this is for ngram count vectorizing.
-    # do not join when using simple count or TFIDF vectorizing
-    # text = ' '.join([ps.stem(word) for word in tokens if word not in stopword])
     text = [ps.stem(word) for word in tokens if word not in stopword]
     return text
 
@@ -154,45 +97,13 @@ def makeHist(filepath):
     pyplot.show()
 
 def tagger(text):
-    # import a list of tagged sentences from the Brown corpus
-    # this will be used to train the tagger
-    # brown_tagged_sents = brown.tagged_sents(categories='news')
-    # brown_sents = brown.sents(categories='news')
-    # # separate training sets from a test set to test effectiveness of
-    # # tagger
-    # size = int(len(brown_tagged_sents) * 0.9)
-    # train_sents = brown_tagged_sents[:size]
-    # test_sents = brown_tagged_sents[size:]
-    # # combine taggers using a BACKOFF TAGGING
-    # t0 = nltk.DefaultTagger('NN')
-    # t1 = nltk.UnigramTagger(train_sents, backoff=t0)
-    # t2 = nltk.BigramTagger(train_sents, backoff=t1)
-    # TrigramTagger can be added, but does not improve accuracy, so was
-    # intentionally ommitted
     output = {}
     for sentence in text:
         tokens = nltk.word_tokenize(sentence)
-        # tagged = dict(t2.tag(tokens))
         tagged = nltk.pos_tag(tokens,tagset='universal')
         output.update(tagged)
     return output
 
-def tokenStemmer(tagged_sents):
-    ps = nltk.PorterStemmer()
-    verbs = {}
-    count = 0
-    for word in tagged_sents:
-        tag = tagged_sents[word]
-        if tag in vars.verb_tags:
-            count += 1
-            verbs[count] = ps.stem(word)
-        # else:
-        #     print(tag)
-    return verbs
-
-
-# one function to replace 3
-# this function should find a given part of speach
 def posFinder(filename, pos):
     ps = nltk.PorterStemmer()
     tag_set = vars.pos_tags
