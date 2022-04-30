@@ -139,6 +139,11 @@ def dataGrouper(token_set):
         group_names.append(word[0])
     return (group_data, group_names)
 
+def commonTokenFinder(token_set):
+    freq_distro = nltk.FreqDist(token_set)
+    common = freq_distro.most_common(20)
+    return common
+
 def chartTokenFreq(jd_set):
 
     all_verbs = collections.defaultdict(int)
@@ -154,14 +159,9 @@ def chartTokenFreq(jd_set):
     fit_adj = nonsenseFilter(all_adj)
     fit_nouns = nonsenseFilter(all_nouns)
 
-    verb_freq_distro = nltk.FreqDist(fit_verbs)
-    common_verbs = verb_freq_distro.most_common(10)
-
-    adj_freq_distro = nltk.FreqDist(fit_adj)
-    common_adj = adj_freq_distro.most_common(20)
-
-    noun_freq_distro = nltk.FreqDist(fit_nouns)
-    common_nouns = noun_freq_distro.most_common(20)
+    common_verbs = commonTokenFinder(fit_verbs)
+    common_adj = commonTokenFinder(fit_adj)
+    common_nouns = commonTokenFinder(fit_nouns)
 
     verbs_grouped = dataGrouper(common_verbs)
     verb_group_data = verbs_grouped[0]
