@@ -124,7 +124,6 @@ def posFinder(filename, pos):
 
 def nonsenseFilter(token_dict):
     fit_tokens = collections.defaultdict(int)
-
     for d in token_dict:
         for i in token_dict[d]:
             stem = token_dict[d][i]
@@ -132,13 +131,21 @@ def nonsenseFilter(token_dict):
                 fit_tokens[stem] += 1
     return fit_tokens
 
-def chartTokenFreq():
+def dataGrouper(token_set):
+    group_data = []
+    group_names = []
+    for word in token_set:
+        group_data.append(word[1])
+        group_names.append(word[0])
+    return (group_data, group_names)
+
+def chartTokenFreq(jd_set):
 
     all_verbs = collections.defaultdict(int)
     all_adj = collections.defaultdict(int)
     all_nouns = collections.defaultdict(int)
 
-    for jd in vars.pm_jd_filenames:
+    for jd in jd_set:
         all_verbs.update(verbs = posFinder(jd, 'VERB'))
         all_adj.update(adjs = posFinder(jd, 'ADJ'))
         all_nouns.update(nouns = posFinder(jd, 'NOUN'))
@@ -154,28 +161,19 @@ def chartTokenFreq():
     common_adj = adj_freq_distro.most_common(20)
 
     noun_freq_distro = nltk.FreqDist(fit_nouns)
-    common_noun = noun_freq_distro.most_common(20)
+    common_nouns = noun_freq_distro.most_common(20)
 
-    verb_group_data = []
-    verb_group_names = []
-    common_verbs_dict = collections.defaultdict(list)
-    for word in common_verbs:
-        verb_group_data.append(word[1])
-        verb_group_names.append(word[0])
+    verbs_grouped = dataGrouper(common_verbs)
+    verb_group_data = verbs_grouped[0]
+    verb_group_names = verbs_grouped[1]
 
-    adj_group_data = []
-    adj_group_names = []
-    common_adj_dict = collections.defaultdict(list)
-    for word in common_adj:
-        adj_group_data.append(word[1])
-        adj_group_names.append(word[0])
+    adj_grouped = dataGrouper(common_adj)
+    adj_group_data = adj_grouped[0]
+    adj_group_names = adj_grouped[1]
 
-    noun_group_data = []
-    noun_group_names = []
-    common_noun_dict = collections.defaultdict(list)
-    for word in common_noun:
-        noun_group_data.append(word[1])
-        noun_group_names.append(word[0])
+    nouns_grouped = dataGrouper(common_nouns)
+    noun_group_data = nouns_grouped[0]
+    noun_group_names = nouns_grouped[1]
 
     fig, (ax1, ax2, ax3) = plt.subplots(1,3)
     ax1.barh(verb_group_names, verb_group_data)

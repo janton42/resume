@@ -20,7 +20,7 @@ def main():
     # extracted = utils.pdfParser(filename, pageNumber)
     # utils.harvardKeyworder(extracted)
 
-    utils.chartTokenFreq()
+    utils.chartTokenFreq(vars.pm_jd_filenames)
 
 if __name__ == '__main__':
     main()
