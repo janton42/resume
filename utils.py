@@ -226,3 +226,21 @@ def nounFinder(filename):
             nouns[count] = ps.stem(word)
 
     return nouns
+
+# one function to replace 3
+# this function should find a given part of speach
+def posFinder(filename, pos):
+    ps = nltk.PorterStemmer()
+    tag_set = vars.pos_tags
+    text = txtParser(vars.devJdFilePath + filename)
+    sentences = text.split('.')
+    tagged_sents = tagger(sentences)
+    stemmed_tokens = {}
+    count = 0
+    for token in tagged_sents:
+        tag = tagged_sents[token]
+        if tag in tag_set[pos]:
+            count += 1
+            stemmed_tokens[count] = ps.stem(token)
+
+    return stemmed_tokens

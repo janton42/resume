@@ -28,9 +28,11 @@ patterns = [
     (r'.*','NN')                    # nouns (default)
 ]
 
-verb_tags = ['VB','VBG','VBD', 'VBN','VBN-HL','VERB']
-adj_tags = ['JJ','JJ-T','ADJ']
-noun_tags = ['NOUN','NN']
+pos_tags = {
+    'VERB': ['VB','VBG','VBD', 'VBN','VBN-HL','VERB'],
+    'ADJ': ['JJ','JJ-T','ADJ'],
+    'NOUN': ['NOUN','NN']
+    }
 
 
 pm_jd_filenames = [
