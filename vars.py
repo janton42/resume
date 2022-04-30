@@ -31,7 +31,7 @@ patterns = [
 verb_tags = ['VB','VBG','VBD', 'VBN','VBN-HL','VERB']
 adj_tags = ['JJ','JJ-T','ADJ']
 noun_tags = ['NOUN','NN']
-nonsense = ['work', 'involv','look','join','achiev','will', 'is']
+
 
 pm_jd_filenames = [
     'prog_man_learn_sys_github_clean.txt',
@@ -51,3 +51,63 @@ ana_man_filenames = [
 intel_analyst_filenames = [
     'intel_analyst_alliedunited_clean.txt'
 ]
+
+all_jd_filenames = [
+    'intel_analyst_alliedunited_clean.txt',
+    'prog_man_learn_sys_github_clean.txt',
+    'prog_man_plus_clean.txt',
+    'prog_man_tradedesk_clean.txt',
+    'prog_man_whatsapp_clean.txt',
+    'anal_insights_man_clean.txt',
+    'cust_anal_man_nextdoor_clean.txt',
+    'data_anal_man_bailielumber_clean.txt',
+    'people_anal_man_pwc_clean.txt',
+    'strat_insights_anal_man_newtonx_clean.txt'
+]
+
+nonsense = [
+    'work',
+    'involv',
+    'look',
+    'join',
+    'achiev',
+    'will',
+    'is',
+    'must',
+    'have',
+    'demonstr',
+    'includ',
+    'quarterly',
+    'daily',
+    'weekly',
+    'monthly',
+    'full-time',
+    'ideal',
+    'WhatsApp',
+    'program',
+    'Program',
+    'position',
+    'manager',
+    'Manager',
+    'experi',
+    'manag',
+    'quarterli',
+    'daili',
+    'weekli',
+    'monthli',
+    'full-tim',
+    'employe',
+    'role',
+    'newtonx',
+    'are',
+    'be',
+    'exist',
+    'other',
+    'would',
+    'should',
+    'could',
+    'll',
+    'ttd',
+    'candid',
+    'year'
+    ]

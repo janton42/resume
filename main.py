@@ -34,20 +34,45 @@ def main():
 
     fit_verbs = collections.defaultdict(int)
     all_verbs = collections.defaultdict(int)
+
+    fit_adj = collections.defaultdict(int)
     all_adj = collections.defaultdict(int)
 
-    for jd in vars.intel_analyst_filenames:
+    fit_nouns = collections.defaultdict(int)
+    all_nouns = collections.defaultdict(int)
+
+    for jd in vars.all_jd_filenames:
         all_verbs.update(verbs = utils.verbFinder(jd))
         all_adj.update(adjs = utils.adjFinder(jd))
+        all_nouns.update(nouns = utils.nounFinder(jd))
 
     for d in all_verbs:
         for i in all_verbs[d]:
             stem = all_verbs[d][i]
-            if stem not in vars.nonsense:
+            if stem not in vars.nonsense and len(stem) > 1:
                 fit_verbs[stem] += 1
+
+    for d in all_adj:
+        for i in all_adj[d]:
+            adj = all_adj[d][i]
+            if adj not in vars.nonsense:
+                fit_adj[adj] += 1
+
+    for d in all_nouns:
+        for i in all_nouns[d]:
+            noun = all_nouns[d][i]
+            if noun not in vars.nonsense:
+                fit_nouns[noun] += 1
+
 
     verb_freq_distro = nltk.FreqDist(fit_verbs)
     common_verbs = verb_freq_distro.most_common(10)
+
+    adj_freq_distro = nltk.FreqDist(fit_adj)
+    common_adj = adj_freq_distro.most_common(10)
+
+    noun_freq_distro = nltk.FreqDist(fit_nouns)
+    common_noun = noun_freq_distro.most_common(10)
     # frequent = {(stem, fit_verbs[stem]) for stem in fit_verbs if fit_verbs[stem] > 1}
     # sorted_frequent_verbs = sorted(frequent, key=lambda word: word[1], reverse=True)
 
@@ -58,17 +83,49 @@ def main():
         verb_group_data.append(word[1])
         verb_group_names.append(word[0])
 
+    adj_group_data = []
+    adj_group_names = []
+    common_adj_dict = collections.defaultdict(list)
+    for word in common_adj:
+        adj_group_data.append(word[1])
+        adj_group_names.append(word[0])
+
+    noun_group_data = []
+    noun_group_names = []
+    common_noun_dict = collections.defaultdict(list)
+    for word in common_noun:
+        noun_group_data.append(word[1])
+        noun_group_names.append(word[0])
+
     # print(common_verbs_dict)
 
     # verb_group_data = list(common_verbs.values())
     # verb_group_names = list(common_verbs.keys())
 
-    fig, ax = plt.subplots()
-    ax.barh(verb_group_names, verb_group_data)
-    ax.set_ylabel('Stems')
-    ax.set_xlabel('Frequency')
-    ax.set_title('Most Common Verb Stems')
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, sharex=True, figsize=(20,20))
+    ax1.barh(verb_group_names, verb_group_data)
+    ax1.set_title('Most Common Verb Stems [top 10]')
+
+    ax2.barh(adj_group_names, adj_group_data)
+    ax2.set_xlabel('Frequency')
+    ax2.set_title('Most Common Adjectives [top 10]')
+
+    ax3.barh(noun_group_names, noun_group_data)
+    ax3.set_title('Most Common Nouns [top 10]')
     plt.show()
+
+    # print(common_verbs_dict)
+
+    # verb_group_data = list(common_verbs.values())
+    # verb_group_names = list(common_verbs.keys())
+
+    # fig, ax = plt.subplots()
+    # ax.barh(adj_group_names, adj_group_data)
+    # ax.set_ylabel('Adjectives')
+    # ax.set_xlabel('Frequency')
+    # ax.set_title('Most Common Adjectives [top 20]')
+    # fig.show()
+
 
 
     # opsNofit_verbs1verbs = utils.verbFinder(opsNofit_verbs1)

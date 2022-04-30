@@ -177,7 +177,7 @@ def tagger(text):
         output.update(tagged)
     return output
 
-def verbStemmer(tagged_sents):
+def tokenStemmer(tagged_sents):
     ps = nltk.PorterStemmer()
     verbs = {}
     count = 0
@@ -194,10 +194,11 @@ def verbFinder(filename):
     text = txtParser(vars.devJdFilePath + filename)
     sentences = text.split('.')
     tagged_sents = tagger(sentences)
-    stems = verbStemmer(tagged_sents)
+    stems = tokenStemmer(tagged_sents)
     return stems
 
 def adjFinder(filename):
+    ps = nltk.PorterStemmer()
     text = txtParser(vars.devJdFilePath + filename)
     sentences = text.split('.')
     tagged_sents = tagger(sentences)
@@ -207,6 +208,21 @@ def adjFinder(filename):
         tag = tagged_sents[word]
         if tag in vars.adj_tags:
             count += 1
-            adjs[count] = word
+            adjs[count] = ps.stem(word)
 
     return adjs
+
+def nounFinder(filename):
+    ps = nltk.PorterStemmer()
+    text = txtParser(vars.devJdFilePath + filename)
+    sentences = text.split('.')
+    tagged_sents = tagger(sentences)
+    nouns = {}
+    count = 0
+    for word in tagged_sents:
+        tag = tagged_sents[word]
+        if tag in vars.noun_tags:
+            count += 1
+            nouns[count] = ps.stem(word)
+
+    return nouns
