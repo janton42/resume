@@ -122,14 +122,20 @@ def posFinder(filename, pos):
 
     return stemmed_tokens
 
+def nonsenseFilter(token_dict):
+    fit_tokens = collections.defaultdict(int)
+
+    for d in token_dict:
+        for i in token_dict[d]:
+            stem = token_dict[d][i]
+            if stem not in vars.nonsense:
+                fit_tokens[stem] += 1
+    return fit_tokens
+
 def chartTokenFreq():
-    fit_verbs = collections.defaultdict(int)
+
     all_verbs = collections.defaultdict(int)
-
-    fit_adj = collections.defaultdict(int)
     all_adj = collections.defaultdict(int)
-
-    fit_nouns = collections.defaultdict(int)
     all_nouns = collections.defaultdict(int)
 
     for jd in vars.pm_jd_filenames:
@@ -137,22 +143,9 @@ def chartTokenFreq():
         all_adj.update(adjs = posFinder(jd, 'ADJ'))
         all_nouns.update(nouns = posFinder(jd, 'NOUN'))
 
-    for d in all_verbs:
-        for i in all_verbs[d]:
-            stem = all_verbs[d][i]
-            if stem not in vars.nonsense:
-                fit_verbs[stem] += 1
-
-    for d in all_adj:
-        for i in all_adj[d]:
-            adj = all_adj[d][i]
-            fit_adj[adj] += 1
-
-    for d in all_nouns:
-        for i in all_nouns[d]:
-            noun = all_nouns[d][i]
-            fit_nouns[noun] += 1
-
+    fit_verbs = nonsenseFilter(all_verbs)
+    fit_adj = nonsenseFilter(all_adj)
+    fit_nouns = nonsenseFilter(all_nouns)
 
     verb_freq_distro = nltk.FreqDist(fit_verbs)
     common_verbs = verb_freq_distro.most_common(10)
