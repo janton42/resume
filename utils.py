@@ -154,15 +154,18 @@ def chartTokenFreq(jd_set):
         all_verbs.update(verbs = posFinder(jd, 'VERB'))
         all_adj.update(adjs = posFinder(jd, 'ADJ'))
         all_nouns.update(nouns = posFinder(jd, 'NOUN'))
-
+    # print('All Nouns:\n')
+    # print(all_nouns)
     fit_verbs = nonsenseFilter(all_verbs)
     fit_adj = nonsenseFilter(all_adj)
     fit_nouns = nonsenseFilter(all_nouns)
-
+    # print('Fit Nouns:\n')
+    # print(fit_nouns)
     common_verbs = commonTokenFinder(fit_verbs)
     common_adj = commonTokenFinder(fit_adj)
     common_nouns = commonTokenFinder(fit_nouns)
-
+    # print('Common Nouns:\n')
+    # print(common_nouns)
     verbs_grouped = dataGrouper(common_verbs)
     verb_group_data = verbs_grouped[0]
     verb_group_names = verbs_grouped[1]
@@ -174,6 +177,8 @@ def chartTokenFreq(jd_set):
     nouns_grouped = dataGrouper(common_nouns)
     noun_group_data = nouns_grouped[0]
     noun_group_names = nouns_grouped[1]
+    # print('Nouns Formatted for Charting:\n')
+    # print(noun_group_names)
 
     fig, (ax1, ax2, ax3) = plt.subplots(1,3)
     ax1.barh(verb_group_names, verb_group_data)
