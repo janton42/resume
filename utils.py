@@ -190,42 +190,6 @@ def tokenStemmer(tagged_sents):
         #     print(tag)
     return verbs
 
-def verbFinder(filename):
-    text = txtParser(vars.devJdFilePath + filename)
-    sentences = text.split('.')
-    tagged_sents = tagger(sentences)
-    stems = tokenStemmer(tagged_sents)
-    return stems
-
-def adjFinder(filename):
-    ps = nltk.PorterStemmer()
-    text = txtParser(vars.devJdFilePath + filename)
-    sentences = text.split('.')
-    tagged_sents = tagger(sentences)
-    adjs = {}
-    count = 0
-    for word in tagged_sents:
-        tag = tagged_sents[word]
-        if tag in vars.adj_tags:
-            count += 1
-            adjs[count] = ps.stem(word)
-
-    return adjs
-
-def nounFinder(filename):
-    ps = nltk.PorterStemmer()
-    text = txtParser(vars.devJdFilePath + filename)
-    sentences = text.split('.')
-    tagged_sents = tagger(sentences)
-    nouns = {}
-    count = 0
-    for word in tagged_sents:
-        tag = tagged_sents[word]
-        if tag in vars.noun_tags:
-            count += 1
-            nouns[count] = ps.stem(word)
-
-    return nouns
 
 # one function to replace 3
 # this function should find a given part of speach
