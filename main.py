@@ -63,8 +63,11 @@ def main():
 
     fig, ax = plt.subplots()
     ax.barh(group_names, group_data)
+    ax.set_ylabel('Stems')
+    ax.set_xlabel('Frequency')
+    ax.set_title('Most Common Verb Stems')
     plt.show()
-    
+
 
     # opsNoFit1verbs = utils.verbFinder(opsNoFit1)
     #

@@ -156,23 +156,24 @@ def makeHist(filepath):
 def tagger(text):
     # import a list of tagged sentences from the Brown corpus
     # this will be used to train the tagger
-    brown_tagged_sents = brown.tagged_sents(categories='news')
-    brown_sents = brown.sents(categories='news')
-    # separate training sets from a test set to test effectiveness of
-    # tagger
-    size = int(len(brown_tagged_sents) * 0.9)
-    train_sents = brown_tagged_sents[:size]
-    test_sents = brown_tagged_sents[size:]
-    # combine taggers using a BACKOFF TAGGING
-    t0 = nltk.DefaultTagger('NN')
-    t1 = nltk.UnigramTagger(train_sents, backoff=t0)
-    t2 = nltk.BigramTagger(train_sents, backoff=t1)
+    # brown_tagged_sents = brown.tagged_sents(categories='news')
+    # brown_sents = brown.sents(categories='news')
+    # # separate training sets from a test set to test effectiveness of
+    # # tagger
+    # size = int(len(brown_tagged_sents) * 0.9)
+    # train_sents = brown_tagged_sents[:size]
+    # test_sents = brown_tagged_sents[size:]
+    # # combine taggers using a BACKOFF TAGGING
+    # t0 = nltk.DefaultTagger('NN')
+    # t1 = nltk.UnigramTagger(train_sents, backoff=t0)
+    # t2 = nltk.BigramTagger(train_sents, backoff=t1)
     # TrigramTagger can be added, but does not improve accuracy, so was
     # intentionally ommitted
     output = {}
     for sentence in text:
         tokens = nltk.word_tokenize(sentence)
-        tagged = dict(t2.tag(tokens))
+        # tagged = dict(t2.tag(tokens))
+        tagged = nltk.pos_tag(tokens,tagset='universal')
         output.update(tagged)
     return output
 
@@ -185,6 +186,8 @@ def verbStemmer(tagged_sents):
         if tag in vars.verb_tags:
             count += 1
             verbs[count] = ps.stem(word)
+        # else:
+        #     print(tag)
     return verbs
 
 def verbFinder(filename):

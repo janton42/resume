@@ -28,8 +28,10 @@ patterns = [
     (r'.*','NN')                    # nouns (default)
 ]
 
-verb_tags = ['VB','VBG','VBD', 'VBN']
-nonsense = ['work', 'involv','look','join','achiev']
+verb_tags = ['VB','VBG','VBD', 'VBN','VBN-HL','VERB']
+adj_tags = ['JJ','JJ-T','ADJ']
+noun_tags = ['NOUN','NN']
+nonsense = ['work', 'involv','look','join','achiev','will', 'is']
 
 pm_jd_filenames = [
     'prog_man_learn_sys_github_clean.txt',
