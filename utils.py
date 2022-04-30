@@ -196,3 +196,17 @@ def verbFinder(filename):
     tagged_sents = tagger(sentences)
     stems = verbStemmer(tagged_sents)
     return stems
+
+def adjFinder(filename):
+    text = txtParser(vars.devJdFilePath + filename)
+    sentences = text.split('.')
+    tagged_sents = tagger(sentences)
+    adjs = {}
+    count = 0
+    for word in tagged_sents:
+        tag = tagged_sents[word]
+        if tag in vars.adj_tags:
+            count += 1
+            adjs[count] = word
+
+    return adjs

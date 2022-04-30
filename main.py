@@ -32,48 +32,50 @@ def main():
     # utils.makeHist(data)
 
 
-    fit = collections.defaultdict(int)
+    fit_verbs = collections.defaultdict(int)
     all_verbs = collections.defaultdict(int)
+    all_adj = collections.defaultdict(int)
 
     for jd in vars.intel_analyst_filenames:
-        all_verbs.update(am5verbs = utils.verbFinder(jd))
+        all_verbs.update(verbs = utils.verbFinder(jd))
+        all_adj.update(adjs = utils.adjFinder(jd))
 
     for d in all_verbs:
         for i in all_verbs[d]:
             stem = all_verbs[d][i]
             if stem not in vars.nonsense:
-                fit[stem] += 1
+                fit_verbs[stem] += 1
 
-    freq_distro = nltk.FreqDist(fit)
-    common = freq_distro.most_common(10)
-    # frequent = {(stem, fit[stem]) for stem in fit if fit[stem] > 1}
+    verb_freq_distro = nltk.FreqDist(fit_verbs)
+    common_verbs = verb_freq_distro.most_common(10)
+    # frequent = {(stem, fit_verbs[stem]) for stem in fit_verbs if fit_verbs[stem] > 1}
     # sorted_frequent_verbs = sorted(frequent, key=lambda word: word[1], reverse=True)
 
-    group_data = []
-    group_names = []
-    common_dict = collections.defaultdict(list)
-    for word in common:
-        group_data.append(word[1])
-        group_names.append(word[0])
+    verb_group_data = []
+    verb_group_names = []
+    common_verbs_dict = collections.defaultdict(list)
+    for word in common_verbs:
+        verb_group_data.append(word[1])
+        verb_group_names.append(word[0])
 
-    # print(common_dict)
+    # print(common_verbs_dict)
 
-    # group_data = list(common.values())
-    # group_names = list(common.keys())
+    # verb_group_data = list(common_verbs.values())
+    # verb_group_names = list(common_verbs.keys())
 
     fig, ax = plt.subplots()
-    ax.barh(group_names, group_data)
+    ax.barh(verb_group_names, verb_group_data)
     ax.set_ylabel('Stems')
     ax.set_xlabel('Frequency')
     ax.set_title('Most Common Verb Stems')
     plt.show()
 
 
-    # opsNoFit1verbs = utils.verbFinder(opsNoFit1)
+    # opsNofit_verbs1verbs = utils.verbFinder(opsNofit_verbs1)
     #
     # print('{}:\n{}'.format('Analytics 4', am4verbs))
     # print('{}:\n{}'.format('Analytics 5', am5verbs))
     # print('{}:\n{}'.format('Analytics 6', am6verbs))
-    # print('{}:\n{}'.format('Operations (No Fit)', opsNoFit1verbs))
+    # print('{}:\n{}'.format('Operations (No fit_verbs)', opsNofit_verbs1verbs))
 if __name__ == '__main__':
     main()
