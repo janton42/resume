@@ -33,9 +33,11 @@ def main():
 
     # utils.chartTokenFreq(vars.all_jd_filenames)
     action_words_filepath = vars.devFilesPath + 'action_types.csv'
-    df = utils.actionWordGetter(action_words_filepath)
-    print(df)
+    df = utils.actionTokenGetter(action_words_filepath)
+    # print(df)
 
+    tokens = utils.tokenCompiler(vars.pm_jd_filenames, 'VERB')
+    print(tokens[4])
 
 if __name__ == '__main__':
     main()

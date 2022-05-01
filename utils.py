@@ -20,7 +20,6 @@ DOCSTRING
 """
 import vars
 import os
-import csv
 import string
 import re
 import nltk
@@ -33,7 +32,7 @@ import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from PyPDF2 import PdfFileReader
 from nltk.tokenize import WhitespaceTokenizer
-from nltk.corpus import brown
+from nltk.corpus import brown, WordNet
 
 # pulls the text out of a pdf
 def pdfParser(filename, pageNumber):
@@ -42,17 +41,19 @@ def pdfParser(filename, pageNumber):
             reader = PdfFileReader(file)
             pdfContents = reader.getPage(pageNumber).extractText()
             return pdfContents
+
 #pulls text from a .txt file
 def txtParser(filename):
     with open(filename) as file:
         txtContents = file.read()
         return txtContents
 
-def actionWordGetter(filename):
+def actionTokenGetter(filename):
     csv_in = pd.read_csv(filename)
     working = pd.DataFrame(csv_in)
+    ps = nltk.PorterStemmer()
+    working['stems'] = [ps.stem(x.lower()) for x in working['action']]
     return working
-
 
 # removes the words from the Harvard resume
 def harvardKeyworder(wordlist):
@@ -164,7 +165,7 @@ def freqRanker(token_set):
     ranked = sorted(counter.items(), key=lambda item: item[1],reverse=True)
     return ranked[:20]
 
-def chartPrepper(jd_set, pos):
+def tokenCompiler(jd_set, pos):
     all_tokens = {}
     count = 0
     for jd in jd_set:
@@ -172,6 +173,10 @@ def chartPrepper(jd_set, pos):
         for t in tokens:
             all_tokens[count] = tokens[t]
             count += 1
+    return all_tokens
+
+def chartPrepper(jd_set, pos):
+    all_tokens = tokenCompiler(jd_set, pos)
     fit_tokens = nonsenseFilter(all_tokens)
     common_tokens= freqRanker(fit_tokens)
     ranked = dataGrouper(common_tokens)
@@ -206,3 +211,10 @@ def chartTokenFreq(jd_set):
     ax3.set_xlabel('Frequency')
     ax3.set_title('Nouns')
     plt.show()
+
+def getSynonyms(token_set):
+    synonyms = []
+    for token in token_set:
+        for syn in WordNet.synsets([token]):
+            sunonmys.appen(syn)
+    return synonyms
