@@ -40,11 +40,11 @@ pm_jd_filenames = [
 ]
 
 ana_man_filenames = [
-    'anal_insights_man_clean.txt',
-    'cust_anal_man_nextdoor_clean.txt',
-    'data_anal_man_bailielumber_clean.txt',
-    'people_anal_man_pwc_clean.txt',
-    'strat_insights_anal_man_newtonx_clean.txt'
+    'ana_insights_man_clean.txt',
+    'cust_ana_man_nextdoor_clean.txt',
+    'data_ana_man_bailielumber_clean.txt',
+    'people_ana_man_pwc_clean.txt',
+    'strat_insights_ana_man_newtonx_clean.txt'
 ]
 
 intel_analyst_filenames = [
@@ -65,11 +65,11 @@ all_jd_filenames = [
     'prog_man_plus_clean.txt',
     'prog_man_tradedesk_clean.txt',
     'prog_man_whatsapp_clean.txt',
-    'anal_insights_man_clean.txt',
-    'cust_anal_man_nextdoor_clean.txt',
-    'data_anal_man_bailielumber_clean.txt',
-    'people_anal_man_pwc_clean.txt',
-    'strat_insights_anal_man_newtonx_clean.txt',
+    'ana_insights_man_clean.txt',
+    'cust_ana_man_nextdoor_clean.txt',
+    'data_ana_man_bailielumber_clean.txt',
+    'people_ana_man_pwc_clean.txt',
+    'strat_insights_ana_man_newtonx_clean.txt',
     'prog_man_prod_ops_chainlinklabs_clean.txt',
     'prog_man_content_prod_coursera.txt',
     'prog_man_mem_cust_insights_linkedin_clean.txt',
