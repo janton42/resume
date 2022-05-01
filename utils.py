@@ -48,6 +48,12 @@ def txtParser(filename):
         txtContents = file.read()
         return txtContents
 
+def actionWordGetter(filename):
+    csv_in = pd.read_csv(filename)
+    working = pd.DataFrame(csv_in)
+    return working
+
+
 # removes the words from the Harvard resume
 def harvardKeyworder(wordlist):
     tk = WhitespaceTokenizer()

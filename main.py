@@ -14,9 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
-"""
-DOCSTRING
-"""
+
 import utils
 import vars
 
@@ -34,7 +32,9 @@ def main():
     # nouns
 
     # utils.chartTokenFreq(vars.all_jd_filenames)
-
+    action_words_filepath = vars.devFilesPath + 'action_types.csv'
+    df = utils.actionWordGetter(action_words_filepath)
+    print(df)
 
 
 if __name__ == '__main__':
