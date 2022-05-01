@@ -139,4 +139,10 @@ nonsense = [
     'v',
     '–',
     '’',
+    'hire',
+    'use',
+    'onlin',
+    'think',
+    'degre',
+    'equival'
     ]

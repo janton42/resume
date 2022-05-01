@@ -127,7 +127,7 @@ def nonsenseFilter(token_dict):
     count = 0
     for d in token_dict:
         stem = token_dict[d]
-        if stem not in vars.nonsense:
+        if stem not in vars.nonsense and len(stem) > 1:
             fit_tokens[count] = stem
             count += 1
     return fit_tokens
@@ -157,7 +157,8 @@ def chartPrepper(jd_set, pos):
             count += 1
     fit_tokens = nonsenseFilter(all_tokens)
     common_tokens= freqRanker(fit_tokens)
-    return dataGrouper(common_tokens)
+    ranked = dataGrouper(common_tokens)
+    return ranked
 
 def chartTokenFreq(jd_set):
 
@@ -173,16 +174,18 @@ def chartTokenFreq(jd_set):
     noun_group_data = nouns[0]
     noun_group_names = nouns[1]
 
-    fig, (ax1, ax2, ax3) = plt.subplots(1,3)
+    fig, (ax1, ax2, ax3) = plt.subplots(1,3, figsize=(15,10))
+    fig.suptitle('Most Common Stems [top 20]')
     ax1.barh(verb_group_names, verb_group_data)
+    ax1.set_ylabel('Stems')
     ax1.set_xlabel('Frequency')
-    ax1.set_title('Most Common Verb Stems [top 10]')
+    ax1.set_title('Verbs')
 
     ax2.barh(adj_group_names, adj_group_data)
     ax2.set_xlabel('Frequency')
-    ax2.set_title('Most Common Adjectives')
+    ax2.set_title('Adjectives')
 
     ax3.barh(noun_group_names, noun_group_data)
     ax3.set_xlabel('Frequency')
-    ax3.set_title('Most Common Nouns')
+    ax3.set_title('Nouns')
     plt.show()

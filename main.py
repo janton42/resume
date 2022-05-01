@@ -20,7 +20,12 @@ def main():
     # extracted = utils.pdfParser(filename, pageNumber)
     # utils.harvardKeyworder(extracted)
 
-    utils.chartTokenFreq(vars.pm_jd_filenames)
+    # create a chart of the top 20 most used verbs, adjectives, and
+    # nouns
+
+    # utils.chartTokenFreq(vars.all_jd_filenames)
+
+    
 
 if __name__ == '__main__':
     main()
