@@ -123,12 +123,13 @@ def posFinder(filename, pos):
     return stemmed_tokens
 
 def nonsenseFilter(token_dict):
-    fit_tokens = collections.defaultdict(int)
+    fit_tokens = {}
+    count = 0
     for d in token_dict:
-        for i in token_dict[d]:
-            stem = token_dict[d][i]
-            if stem not in vars.nonsense:
-                fit_tokens[stem] += 1
+        stem = token_dict[d]
+        if stem not in vars.nonsense:
+            fit_tokens[count] = stem
+            count += 1
     return fit_tokens
 
 def dataGrouper(token_set):
@@ -139,46 +140,38 @@ def dataGrouper(token_set):
         group_names.append(word[0])
     return (group_data, group_names)
 
-def commonTokenFinder(token_set):
-    freq_distro = nltk.FreqDist(token_set)
-    common = freq_distro.most_common(20)
-    return common
+def freqRanker(token_set):
+    counter = collections.defaultdict(int)
+    for token in token_set:
+        counter[token_set[token]] += 1
+    ranked = sorted(counter.items(), key=lambda item: item[1],reverse=True)
+    return ranked[:20]
+
+def chartPrepper(jd_set, pos):
+    all_tokens = {}
+    count = 0
+    for jd in jd_set:
+        tokens = posFinder(jd, pos)
+        for t in tokens:
+            all_tokens[count] = tokens[t]
+            count += 1
+    fit_tokens = nonsenseFilter(all_tokens)
+    common_tokens= freqRanker(fit_tokens)
+    return dataGrouper(common_tokens)
 
 def chartTokenFreq(jd_set):
 
-    all_verbs = collections.defaultdict(int)
-    all_adj = collections.defaultdict(int)
-    all_nouns = collections.defaultdict(int)
+    verbs = chartPrepper(jd_set, 'VERB')
+    verb_group_data = verbs[0]
+    verb_group_names = verbs[1]
 
-    for jd in jd_set:
-        all_verbs.update(verbs = posFinder(jd, 'VERB'))
-        all_adj.update(adjs = posFinder(jd, 'ADJ'))
-        all_nouns.update(nouns = posFinder(jd, 'NOUN'))
-    # print('All Nouns:\n')
-    # print(all_nouns)
-    fit_verbs = nonsenseFilter(all_verbs)
-    fit_adj = nonsenseFilter(all_adj)
-    fit_nouns = nonsenseFilter(all_nouns)
-    # print('Fit Nouns:\n')
-    # print(fit_nouns)
-    common_verbs = commonTokenFinder(fit_verbs)
-    common_adj = commonTokenFinder(fit_adj)
-    common_nouns = commonTokenFinder(fit_nouns)
-    # print('Common Nouns:\n')
-    # print(common_nouns)
-    verbs_grouped = dataGrouper(common_verbs)
-    verb_group_data = verbs_grouped[0]
-    verb_group_names = verbs_grouped[1]
+    adj = chartPrepper(jd_set, 'ADJ')
+    adj_group_data = adj[0]
+    adj_group_names = adj[1]
 
-    adj_grouped = dataGrouper(common_adj)
-    adj_group_data = adj_grouped[0]
-    adj_group_names = adj_grouped[1]
-
-    nouns_grouped = dataGrouper(common_nouns)
-    noun_group_data = nouns_grouped[0]
-    noun_group_names = nouns_grouped[1]
-    # print('Nouns Formatted for Charting:\n')
-    # print(noun_group_names)
+    nouns = chartPrepper(jd_set, 'NOUN')
+    noun_group_data = nouns[0]
+    noun_group_names = nouns[1]
 
     fig, (ax1, ax2, ax3) = plt.subplots(1,3)
     ax1.barh(verb_group_names, verb_group_data)
