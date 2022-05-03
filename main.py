@@ -32,12 +32,18 @@ def main():
     # nouns
 
     # utils.chartTokenFreq(vars.all_jd_filenames)
-    action_words_filepath = vars.devFilesPath + 'action_types.csv'
-    df = utils.actionTokenGetter(action_words_filepath)
-    # print(df)
 
-    tokens = utils.tokenCompiler(vars.pm_jd_filenames, 'VERB')
-    print(tokens[4])
+    action_words_filepath = vars.devFilesPath + 'action_types.csv'
+    harvard_action_tokens_df = utils.actionTokenGetter(action_words_filepath)
+    # print(harvard_action_tokens_df)
+
+    resume_bullets_filepath = vars.devFilesPath + 'user_input.csv'
+    resume_bullets = utils.resumeBulletGetter(resume_bullets_filepath)
+    print(resume_bullets)
+
+
+    # tokens = utils.tokenCompiler(vars.pm_jd_filenames, 'VERB')
+    # print(tokens[4])
 
 if __name__ == '__main__':
     main()

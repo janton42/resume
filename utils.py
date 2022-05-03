@@ -32,7 +32,7 @@ import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from PyPDF2 import PdfFileReader
 from nltk.tokenize import WhitespaceTokenizer
-from nltk.corpus import brown, WordNet
+# from nltk.corpus import brown, WordNet
 
 # pulls the text out of a pdf
 def pdfParser(filename, pageNumber):
@@ -53,6 +53,14 @@ def actionTokenGetter(filename):
     working = pd.DataFrame(csv_in)
     ps = nltk.PorterStemmer()
     working['stems'] = [ps.stem(x.lower()) for x in working['action']]
+    return working
+
+def resumeBulletGetter(filename):
+    csv_in = pd.read_csv(filename)
+    working = pd.DataFrame(csv_in)
+    ps = nltk.PorterStemmer()
+    working['tokens'] = [nltk.word_tokenize(x) for x in working['Bullet']]
+    # working['stems'] = [ps.stem(ys.lower()) for y in working['tokens']]
     return working
 
 # removes the words from the Harvard resume
@@ -212,9 +220,9 @@ def chartTokenFreq(jd_set):
     ax3.set_title('Nouns')
     plt.show()
 
-def getSynonyms(token_set):
-    synonyms = []
-    for token in token_set:
-        for syn in WordNet.synsets([token]):
-            sunonmys.appen(syn)
-    return synonyms
+# def getSynonyms(token_set):
+#     synonyms = []
+#     for token in token_set:
+#         for syn in WordNet.synsets([token]):
+#             sunonmys.appen(syn)
+#     return synonyms
