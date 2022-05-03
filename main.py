@@ -28,16 +28,25 @@ def main():
     # extracted = utils.pdfParser(filename, pageNumber)
     # utils.harvardKeyworder(extracted)
 
+
+
+    jd_parse_filenames = vars.all_jd_filenames
+    jd_set = [utils.txtParser(vars.devJdFilePath + filename) for filename in jd_parse_filenames]
+
+
     # create a chart of the top 20 most used verbs, adjectives, and
     # nouns
+    # jd_verb_stems = utils.chartTokenFreq(jd_set)
 
-    # jd_parse_filenames = vars.all_jd_filenames
-    # jd_set = [utils.txtParser(vars.devJdFilePath + filename) for filename in jd_parse_filenames]
-    # utils.chartTokenFreq(jd_set)
+    # create an ordered list of verbs from job post(s)
+    jd_verb_stems = utils.chartPrepper(jd_set,'VERB')[1]
 
+    # stems the verb suggestions from the Harvard template
     action_words_filepath = vars.devFilesPath + 'action_types.csv'
     harvard_action_tokens_df = utils.actionTokenGetter(action_words_filepath)
-    print(harvard_action_tokens_df)
+    # print(harvard_action_tokens_df)
+
+
 
     resume_bullets_filepath = vars.devFilesPath + 'user_input.csv'
     resume_bullets_df = utils.csv_to_df(resume_bullets_filepath)
@@ -45,6 +54,10 @@ def main():
     # resume_bullet_vstems = [d for d in resume_bullet_vstems if len(list(d)) != 0]
 
     print(resume_bullets_df)
+
+    print(jd_verb_stems)
+
+
 
 
     matches = {}
