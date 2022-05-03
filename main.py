@@ -31,15 +31,23 @@ def main():
     # create a chart of the top 20 most used verbs, adjectives, and
     # nouns
 
-    # utils.chartTokenFreq(vars.all_jd_filenames)
+    # jd_parse_filenames = vars.all_jd_filenames
+    # jd_set = [utils.txtParser(vars.devJdFilePath + filename) for filename in jd_parse_filenames]
+    # utils.chartTokenFreq(jd_set)
 
     action_words_filepath = vars.devFilesPath + 'action_types.csv'
     harvard_action_tokens_df = utils.actionTokenGetter(action_words_filepath)
-    # print(harvard_action_tokens_df)
+    print(harvard_action_tokens_df)
 
     resume_bullets_filepath = vars.devFilesPath + 'user_input.csv'
-    resume_bullets = utils.resumeBulletGetter(resume_bullets_filepath)
-    print(resume_bullets)
+    resume_bullets_df = utils.csv_to_df(resume_bullets_filepath)
+    resume_bullets_df['verb_stems'] = [list(utils.posFinder(bullet, 'VERB').values()) for bullet in resume_bullets_df['Bullet']]
+    # resume_bullet_vstems = [d for d in resume_bullet_vstems if len(list(d)) != 0]
+
+    print(resume_bullets_df)
+
+
+    matches = {}
 
 
     # tokens = utils.tokenCompiler(vars.pm_jd_filenames, 'VERB')

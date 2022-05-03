@@ -48,6 +48,19 @@ def txtParser(filename):
         txtContents = file.read()
         return txtContents
 
+# data cleaning
+def cleanData(text):
+    # gather stopwords from the nltk corpus
+    stopword = nltk.corpus.stopwords.words('english')
+    # initialize a stemmer
+    ps = nltk.PorterStemmer()
+    # remove punctuation
+    text = ''.join([char for char in text if char not in string.punctuation])
+    # tokenize
+    tokens = re.split('\W+', text)
+    text = [ps.stem(word) for word in tokens if word not in stopword]
+    return text
+
 def actionTokenGetter(filename):
     csv_in = pd.read_csv(filename)
     working = pd.DataFrame(csv_in)
@@ -55,12 +68,11 @@ def actionTokenGetter(filename):
     working['stems'] = [ps.stem(x.lower()) for x in working['action']]
     return working
 
-def resumeBulletGetter(filename):
+# takes in a .csv file and returns a pandas data frame object.
+def csv_to_df(filename):
     csv_in = pd.read_csv(filename)
     working = pd.DataFrame(csv_in)
-    ps = nltk.PorterStemmer()
-    working['tokens'] = [nltk.word_tokenize(x) for x in working['Bullet']]
-    # working['stems'] = [ps.stem(ys.lower()) for y in working['tokens']]
+
     return working
 
 # removes the words from the Harvard resume
@@ -74,19 +86,6 @@ def harvardKeyworder(wordlist):
     with open(output_path, 'w') as csvFile:
         writer = csv.writer(csvFile)
         writer.writerows(output)
-
-# data cleaning
-def cleanData(text):
-    # gather stopwords from the nltk corpus
-    stopword = nltk.corpus.stopwords.words('english')
-    # initialize a stemmer
-    ps = nltk.PorterStemmer()
-    # remove punctuation
-    text = ''.join([char for char in text if char not in string.punctuation])
-    # tokenize
-    tokens = re.split('\W+', text)
-    text = [ps.stem(word) for word in tokens if word not in stopword]
-    return text
 
 def fetchBaseData(filepath):
     data = pd.read_csv(filepath, header=None)
@@ -132,10 +131,9 @@ def tagger(text):
         output.update(tagged)
     return output
 
-def posFinder(filename, pos):
+def posFinder(text, pos):
     ps = nltk.PorterStemmer()
     tag_set = vars.pos_tags
-    text = txtParser(vars.devJdFilePath + filename)
     sentences = text.split('.')
     tagged_sents = tagger(sentences)
     stemmed_tokens = {}
@@ -190,6 +188,7 @@ def chartPrepper(jd_set, pos):
     ranked = dataGrouper(common_tokens)
     return ranked
 
+# takes in a list of job descriptions
 def chartTokenFreq(jd_set):
 
     verbs = chartPrepper(jd_set, 'VERB')
