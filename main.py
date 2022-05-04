@@ -54,44 +54,40 @@ def main():
     user_input_filepath = vars.devFilesPath + 'user_input.csv'
     user_input_df = utils.csv_to_df(user_input_filepath)
     # stem the verbs in user input resume bullet statements
-    print('Calculating your verb strength...')
-    time.sleep(2.0009)
+    # print('Calculating your verb strength...')
+    # time.sleep(2.0009)
     user_input_df['verb_stems'] = [list(utils.posFinder(bullet, 'VERB').values()) for bullet in user_input_df['Bullet']]
     user_input_df['verb_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_verb_stems) for stem_list in user_input_df['verb_stems']]
 
     # stem the adjectives in user input resume bullet statements
-    print('Calculating your adjective strength...')
-    time.sleep(2.1)
+    # print('Calculating your adjective strength...')
+    # time.sleep(2.1)
     user_input_df['adj_stems'] = [list(utils.posFinder(bullet, 'ADJ').values()) for bullet in user_input_df['Bullet']]
     user_input_df['adj_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_adj_stems) for stem_list in user_input_df['adj_stems']]
 
     # stem the nouns in user input resume bullet statements
-    print('Calculating your noun strength...')
-    time.sleep(1.34)
+    # print('Calculating your noun strength...')
+    # time.sleep(1.34)
     user_input_df['noun_stems'] = [list(utils.posFinder(bullet, 'NOUN').values()) for bullet in user_input_df['Bullet']]
     user_input_df['noun_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_noun_stems) for stem_list in user_input_df['noun_stems']]
 
-    print('Calculating your overall bullet point strength...')
-    time.sleep(3.7)
+    # print('Calculating your overall bullet point strength...')
+    # time.sleep(3.7)
     user_input_df['total_bullet_strength'] = (user_input_df['verb_strength_score'] + user_input_df['adj_strength_score'] + user_input_df['noun_strength_score'])
     #
-    print('Ranking the bullet points you provided from strongest to weakest match for the job post(s) provided...\n')
-    time.sleep(2.0009)
-    print('These bullet points are strongest:')
-    time.sleep(0.046)
+    # print('Ranking the bullet points you provided from strongest to weakest match for the job post(s) provided...\n')
+    # time.sleep(2.0009)
+    # print('These bullet points are strongest:')
+    # time.sleep(0.046)
     bullet_strength_index_df = user_input_df[['Bullet','total_bullet_strength']]
     print(bullet_strength_index_df.sort_values(by=['total_bullet_strength'], ascending=False))
-    print('Ranking job titles you\'ve held in the past from strongest to weakest match for the job post(s) provided...\n')
-    time.sleep(2.0009)
-    print('These titles align the closest:')
-    time.sleep(0.046)
+    # print('Ranking job titles you\'ve held in the past from strongest to weakest match for the job post(s) provided...\n')
+    # time.sleep(2.0009)
+    # print('These titles align the closest:')
+    # time.sleep(0.046)
     closest_roles_df = user_input_df[['Organization','Title','total_bullet_strength']]
 
     print(closest_roles_df.sort_values(by=['total_bullet_strength'], ascending=False))
-
-
-
-
 
     matches = {}
 
