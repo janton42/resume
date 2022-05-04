@@ -41,6 +41,7 @@ def main():
     # create an ordered list of verbs from job post(s)
     jd_verb_stems = utils.chartPrepper(jd_set,'VERB')[1]
     jd_adj_stems = utils.chartPrepper(jd_set,'ADJ')[1]
+    jd_noun_stems = utils.chartPrepper(jd_set,'NOUN')[1]
 
     # stems the verb suggestions from the Harvard template
     action_words_filepath = vars.devFilesPath + 'action_types.csv'
@@ -59,7 +60,10 @@ def main():
     user_input_df['adj_stems'] = [list(utils.posFinder(bullet, 'ADJ').values()) for bullet in user_input_df['Bullet']]
     user_input_df['adj_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_adj_stems) for stem_list in user_input_df['adj_stems']]
 
-    print(user_input_df.sort_values(by=['adj_strength_score','verb_strength_score'], ascending=False))
+    # stem the nouns in user input resume bullet statements
+    user_input_df['noun_stems'] = [list(utils.posFinder(bullet, 'NOUN').values()) for bullet in user_input_df['Bullet']]
+    user_input_df['noun_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_noun_stems) for stem_list in user_input_df['noun_stems']]
+    print(user_input_df.sort_values(by=['adj_strength_score','verb_strength_score','noun_strength_score'], ascending=False))
     #
     # print(jd_verb_stems)
 
