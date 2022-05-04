@@ -35,8 +35,9 @@ def main():
 
     jd_parse_filenames = vars.ana_man_filenames
     jd_set = [utils.txtParser(vars.devJdFilePath + filename) for filename in jd_parse_filenames]
-
-
+    resume_txt = utils.txtParser(vars.devFilesPath + 'clean_resume.txt')
+    # workaround for removing non-latin characters
+    decoded_resume_text = resume_txt.encode('latin-1', 'replace').decode('latin-1')
     # create a chart of the top 20 most used verbs, adjectives, and
     # nouns
     # jd_verb_stems = utils.chartTokenFreq(jd_set)
@@ -82,22 +83,20 @@ def main():
     # print('These bullet points are strongest:')
     # time.sleep(0.046)
     bullet_strength_index_df = user_input_df[['Bullet','total_bullet_strength']]
-    print(bullet_strength_index_df.sort_values(by=['total_bullet_strength'], ascending=False))
+    # print(bullet_strength_index_df.sort_values(by=['total_bullet_strength'], ascending=False))
     # print('Ranking job titles you\'ve held in the past from strongest to weakest match for the job post(s) provided...\n')
     # time.sleep(2.0009)
     # print('These titles align the closest:')
     # time.sleep(0.046)
     closest_roles_df = user_input_df[['Organization','Title','total_bullet_strength']]
 
-    print(closest_roles_df.sort_values(by=['total_bullet_strength'], ascending=False))
-
+    # print(closest_roles_df.sort_values(by=['total_bullet_strength'], ascending=False))
     pdf = PDF()
     pdf.alias_nb_pages()
     pdf.add_page()
-    pdf.set_font('Times', size=12)
-    for i in range(1, 41):
-        pdf.cell(0, 10, 'Printing line #' + str(i), 0, 1)
-    pdf.output(vars.tailored_resumes_filepath + 'tailored_1.pdf', 'F')
+    pdf.set_font('Times', size=11)
+    pdf.multi_cell(0, 5, decoded_resume_text, 0, 'L')
+    pdf.output(vars.tailored_resumes_filepath + 'tailored_26.pdf', 'F')
 
 
     # tokens = utils.tokenCompiler(vars.pm_jd_filenames, 'VERB')

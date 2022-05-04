@@ -18,6 +18,14 @@
 
 devFilesPath = './dev/'
 
+dev_person = {
+    'name': 'Jeff Stock',
+    'email': 'jAntonStock@gmail.com',
+    'location': 'San Mateo, CA',
+    'linkedin': 'linkedin.com/in/stockj',
+    'phone': '+1-707-301-8624'
+}
+
 devJdFilePath = devFilesPath + 'jds/'
 
 tailored_resumes_filepath = devFilesPath + 'tailored_resumes/'

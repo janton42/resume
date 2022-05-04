@@ -15,19 +15,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
+import vars
+
 from fpdf import FPDF
 
 class PDF(FPDF):
     def header(self):
-        self.image('./dev/visual/HiredLabs-Icon.png',10, 8, 15)
+        self.person = vars.dev_person
+        self.image('./dev/visual/HiredLabs-Icon.png',x=91, y=8, h=7)
+        self.image('./dev/visual/HiredLabs-Icon.png',x=121, y=8, h=7)
         self.set_font('Arial','B', 12)
-        # self.cell(80)
-        self.cell(200, 0, 'Jeff Stock', 0, 0, 'C')
+        self.cell(200, 5, self.person['name'], 'B', 1, 'C')
+        self.set_font('Arial',style='',size=10)
+        self.cell(200, 5, '{} | {} | {} | {}'.format(
+            self.person['email'],
+            self.person['location'],
+            self.person['linkedin'],
+            self.person['phone']
+        ), 0, 0, 'C')
         self.ln(20)
-
-
-    def section(self):
-        pass
 
 
     def footer(self):

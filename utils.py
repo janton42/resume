@@ -44,7 +44,6 @@ def pdfParser(filename, pageNumber):
             pdfContents = reader.getPage(pageNumber).extractText()
             return pdfContents
 
-
 #pulls text from a .txt file
 def txtParser(filename):
     with open(filename) as file:
