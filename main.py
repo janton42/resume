@@ -53,13 +53,13 @@ def main():
     user_input_df = utils.csv_to_df(user_input_filepath)
     # stem the verbs in user input resume bullet statements
     user_input_df['verb_stems'] = [list(utils.posFinder(bullet, 'VERB').values()) for bullet in user_input_df['Bullet']]
-
     user_input_df['verb_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_verb_stems) for stem_list in user_input_df['verb_stems']]
 
+    # stem the adjectives in user input resume bullet statements
+    user_input_df['adj_stems'] = [list(utils.posFinder(bullet, 'ADJ').values()) for bullet in user_input_df['Bullet']]
+    user_input_df['adj_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_adj_stems) for stem_list in user_input_df['adj_stems']]
 
-
-
-    print(user_input_df.sort_values(by='verb_strength_score', ascending=False))
+    print(user_input_df.sort_values(by=['adj_strength_score','verb_strength_score'], ascending=False))
     #
     # print(jd_verb_stems)
 
