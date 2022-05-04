@@ -20,6 +20,7 @@ import vars
 import time
 from datetime import date
 import pandas as pd
+import regex
 
 from file_writer import PDF
 
@@ -43,7 +44,7 @@ def main():
     # create a chart of the top 20 most used verbs, adjectives, and
     # nouns
     # jd_verb_stems = utils.chartTokenFreq(jd_set)
-
+    print(type(decoded_resume_text))
     # create an ordered list of verbs from job post(s)
     jd_verb_stems = utils.chartPrepper(jd_set,'VERB')[1]
     jd_adj_stems = utils.chartPrepper(jd_set,'ADJ')[1]
@@ -65,48 +66,42 @@ def main():
     user_input_df['verb_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_verb_stems) for stem_list in user_input_df['verb_stems']]
 
     # stem the adjectives in user input resume bullet statements
-    # print('Calculating your adjective strength...')
-    # time.sleep(2.1)
     user_input_df['adj_stems'] = [list(utils.posFinder(bullet, 'ADJ').values()) for bullet in user_input_df['Bullet']]
     user_input_df['adj_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_adj_stems) for stem_list in user_input_df['adj_stems']]
 
     # stem the nouns in user input resume bullet statements
-    # print('Calculating your noun strength...')
-    # time.sleep(1.34)
     user_input_df['noun_stems'] = [list(utils.posFinder(bullet, 'NOUN').values()) for bullet in user_input_df['Bullet']]
     user_input_df['noun_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_noun_stems) for stem_list in user_input_df['noun_stems']]
-
-    # print('Calculating your overall bullet point strength...')
-    # time.sleep(3.7)
     user_input_df['total_bullet_strength'] = (user_input_df['verb_strength_score'] + user_input_df['adj_strength_score'] + user_input_df['noun_strength_score'])
-    #
-    # print('Ranking the bullet points you provided from strongest to weakest match for the job post(s) provided...\n')
-    # time.sleep(2.0009)
-    # print('These bullet points are strongest:')
-    # time.sleep(0.046)
-    bullet_strength_index_df = user_input_df[['Bullet','total_bullet_strength']]
-    # print(bullet_strength_index_df.sort_values(by=['total_bullet_strength'], ascending=False))
-    # print('Ranking job titles you\'ve held in the past from strongest to weakest match for the job post(s) provided...\n')
-    # time.sleep(2.0009)
-    # print('These titles align the closest:')
-    # time.sleep(0.046)
-    closest_roles_df = user_input_df[['Organization','Title','total_bullet_strength','iso_start_date','iso_end_date']]
-    is_valuable = user_input_df['total_bullet_strength'] > 0
-    is_work_exp = user_input_df['Type'] == 'Work'
-    work_exp =  user_input_df[is_work_exp]
-    valuable_experience = work_exp[is_valuable]
-    value_exp_sorted = valuable_experience.sort_values(by=['iso_start_date','total_bullet_strength'], ascending=False)
-    print(value_exp_sorted[['Organization','Title','Bullet', 'total_bullet_strength','iso_start_date','iso_end_date']])
-    # print(closest_roles_df.sort_values(by=['iso_start_date','total_bullet_strength'],ascending=False))
+    # bullet_strength_index_df = user_input_df[['Bullet','total_bullet_strength']]
+    # closest_roles_df = user_input_df[['Organization','Title','total_bullet_strength','iso_start_date','iso_end_date']]
+    # is_valuable = user_input_df['total_bullet_strength'] > 0
+    # is_work_exp = user_input_df['Type'] == 'Work'
+    # work_exp =  user_input_df[is_work_exp]
+    # valuable_experience = work_exp[is_valuable]
+    # value_exp_sorted = valuable_experience.sort_values(by=['iso_start_date','total_bullet_strength'], ascending=False)
+    # find current roles
+    # is_current = user_input_df['iso_end_date'] == 'None'
+    # current_roles = work_exp[is_current]
 
+    section_type = 'Work'
+    org = 'Upwork'
+    location = 'San Mateo, CA'
+    title = 'Program Manager, Data Analytics'
 
-    # print(closest_roles_df.sort_values(by=['total_bullet_strength'], ascending=False))
-    # pdf = PDF()
-    # pdf.alias_nb_pages()
-    # pdf.add_page()
-    # pdf.set_font('Times', size=11)
-    # pdf.multi_cell(0, 5, decoded_resume_text, 0, 'L')
-    # pdf.output(vars.tailored_resumes_filepath + 'tailored_26.pdf', 'F')
+    pdf = PDF()
+    pdf.alias_nb_pages()
+    pdf.add_page()
+    # Add a new resume section
+    pdf.add_resume_section(section_type, user_input_df)
+    # Add a new Organization and its location on the same line, left-
+    # and right-aligned, respectively
+    # pdf.add_resume_org(org, location)
+    # add a Position Title and the start/end dates on the same line,
+    # left and right-aligned, respectively
+    # pdf.add_role(org, title, user_input_df)
+    pdf.output(vars.tailored_resumes_filepath + 'tailored_49.pdf', 'F')
+
 
 
     # tokens = utils.tokenCompiler(vars.pm_jd_filenames, 'VERB')

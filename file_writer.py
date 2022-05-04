@@ -15,7 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
+import utils
 import vars
+import time
+from datetime import date
+import pandas as pd
 
 from fpdf import FPDF
 
@@ -33,8 +37,52 @@ class PDF(FPDF):
             self.person['linkedin'],
             self.person['phone']
         ), 0, 0, 'C')
-        self.ln(20)
+        self.ln(10)
 
+    def add_role(self, org, title, user_input_df):
+        is_org = user_input_df['Organization'] == org
+        one_org = user_input_df[is_org]
+        is_role = one_org['Title'] == title
+        role = one_org[is_role]
+
+        start_month = role['Start Month'].unique()[0]
+        start_year = role['Start Year'].unique()[0]
+        end_month = role['End Month'].unique()[0]
+        end_year = role['End Year'].unique()[0]
+
+        start_date = '{} {}'.format(start_month, start_year)
+        end_date = '{} {}'.format(end_month, end_year) if end_month != 'None' else 'Present'
+        dates = '{} - {}'.format(start_date,end_date)
+
+        role_bullets = utils.role_bullet_prepper(user_input_df, org, title)
+
+        self.set_font('Times','B', size=11)
+        self.cell(w=100, h=5, txt=title,ln=0,align='L')
+        self.set_font('Times', size=11)
+        self.cell(w=80, h=5, txt=dates, ln=1, align='R')
+        self.cell(w=15, h=5,ln=0)
+        self.multi_cell(165, 5, role_bullets, 0, 'L')
+
+    def add_resume_org(self, org, user_input_df):
+        is_org = user_input_df['Organization'] == org
+        one_org = user_input_df[is_org]
+        location = one_org['Location'].unique()[0]
+
+        self.set_font('Times','B', size=11)
+        self.cell(w=100, h=5, txt=org.upper(),ln=0,align='L')
+        self.set_font('Times', size=11)
+        self.cell(w=80, h=5, txt=location, ln=1, align='R')
+
+    def add_resume_section(self, section_type, user_input_df):
+        section_title = 'Experience' if section_type == 'Work' else 'Education'
+        self.set_font('Times','B', size=11)
+        self.cell(w=200, h=5, txt=section_title, ln=1, align='C')
+        is_work_exp = user_input_df['Type'] == 'Work'
+        work_exp =  user_input_df[is_work_exp]
+        date_sorted_orgs = work_exp.sort_values(by=['iso_start_date'], ascending=False)
+        unique_orgs = date_sorted_orgs['Organization'].unique()
+        for org in unique_orgs:
+            self.add_resume_org(org, user_input_df)
 
     def footer(self):
         self.set_y(-15)

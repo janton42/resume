@@ -240,7 +240,19 @@ def bullet_strength_calculator(res_stem_list, jd_stem_list):
             count += 1
     return count
 
+def role_bullet_prepper(user_input_df, org, title):
+    #filter by Organization
+    is_org = user_input_df['Organization'] == org
+    one_org = user_input_df[is_org]
 
+    #TODO: filter by Title
+    is_title = one_org['Title'] == title
+    one_role = one_org[is_title]
+
+    #TODO: Join sorted bullets with a new lines
+    bullet_txt = '\n'.join(one_role['Bullet'])
+
+    return bullet_txt
 # def getSynonyms(token_set):
 #     synonyms = []
 #     for token in token_set:

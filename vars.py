@@ -18,6 +18,8 @@
 
 devFilesPath = './dev/'
 
+dev_bullets = ''
+
 month_ints = {
     'JAN': 1,
     'FEB': 2,
