@@ -18,6 +18,8 @@
 import utils
 import vars
 import time
+from datetime import date
+import pandas as pd
 
 from file_writer import PDF
 
@@ -88,15 +90,23 @@ def main():
     # time.sleep(2.0009)
     # print('These titles align the closest:')
     # time.sleep(0.046)
-    closest_roles_df = user_input_df[['Organization','Title','total_bullet_strength']]
+    closest_roles_df = user_input_df[['Organization','Title','total_bullet_strength','iso_start_date','iso_end_date']]
+    is_valuable = user_input_df['total_bullet_strength'] > 0
+    is_work_exp = user_input_df['Type'] == 'Work'
+    work_exp =  user_input_df[is_work_exp]
+    valuable_experience = work_exp[is_valuable]
+    value_exp_sorted = valuable_experience.sort_values(by=['iso_start_date','total_bullet_strength'], ascending=False)
+    print(value_exp_sorted[['Organization','Title','Bullet', 'total_bullet_strength','iso_start_date','iso_end_date']])
+    # print(closest_roles_df.sort_values(by=['iso_start_date','total_bullet_strength'],ascending=False))
+
 
     # print(closest_roles_df.sort_values(by=['total_bullet_strength'], ascending=False))
-    pdf = PDF()
-    pdf.alias_nb_pages()
-    pdf.add_page()
-    pdf.set_font('Times', size=11)
-    pdf.multi_cell(0, 5, decoded_resume_text, 0, 'L')
-    pdf.output(vars.tailored_resumes_filepath + 'tailored_26.pdf', 'F')
+    # pdf = PDF()
+    # pdf.alias_nb_pages()
+    # pdf.add_page()
+    # pdf.set_font('Times', size=11)
+    # pdf.multi_cell(0, 5, decoded_resume_text, 0, 'L')
+    # pdf.output(vars.tailored_resumes_filepath + 'tailored_26.pdf', 'F')
 
 
     # tokens = utils.tokenCompiler(vars.pm_jd_filenames, 'VERB')

@@ -26,6 +26,7 @@ import nltk
 import collections
 import time
 import fpdf
+import datetime
 
 import pandas as pd
 import numpy as np
@@ -238,6 +239,7 @@ def bullet_strength_calculator(res_stem_list, jd_stem_list):
         if stem in jd_stem_list:
             count += 1
     return count
+
 
 # def getSynonyms(token_set):
 #     synonyms = []
