@@ -25,6 +25,7 @@ import re
 import nltk
 import collections
 import time
+import fpdf
 
 import pandas as pd
 import numpy as np
@@ -42,6 +43,7 @@ def pdfParser(filename, pageNumber):
             reader = PdfFileReader(file)
             pdfContents = reader.getPage(pageNumber).extractText()
             return pdfContents
+
 
 #pulls text from a .txt file
 def txtParser(filename):
