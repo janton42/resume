@@ -54,14 +54,7 @@ def main():
     # stem the verbs in user input resume bullet statements
     user_input_df['verb_stems'] = [list(utils.posFinder(bullet, 'VERB').values()) for bullet in user_input_df['Bullet']]
 
-    def bullet_strength_calculator(res_stem_list, jd_stem_list):
-        count = 0
-        for stem in res_stem_list:
-            if stem in jd_stem_list:
-                count += 1
-        return count
-
-    user_input_df['verb_strength_score'] = [bullet_strength_calculator(stem_list, jd_verb_stems) for stem_list in user_input_df['verb_stems']]
+    user_input_df['verb_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_verb_stems) for stem_list in user_input_df['verb_stems']]
 
 
 

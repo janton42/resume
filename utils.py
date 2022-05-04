@@ -219,6 +219,13 @@ def chartTokenFreq(jd_set):
     ax3.set_title('Nouns')
     plt.show()
 
+def bullet_strength_calculator(res_stem_list, jd_stem_list):
+    count = 0
+    for stem in res_stem_list:
+        if stem in jd_stem_list:
+            count += 1
+    return count
+
 # def getSynonyms(token_set):
 #     synonyms = []
 #     for token in token_set:
