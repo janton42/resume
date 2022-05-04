@@ -51,7 +51,7 @@ class PDF(FPDF):
         end_year = role['End Year'].unique()[0]
 
         start_date = '{} {}'.format(start_month, start_year)
-        end_date = '{} {}'.format(end_month, end_year) if end_month != 'None' else 'Present'
+        end_date = '{} {}'.format(end_month, end_year) if end_month != 'None' and end_year != 'None' else 'Present'
         dates = '{} - {}'.format(start_date,end_date)
 
         role_bullets = utils.role_bullet_prepper(user_input_df, org, title)
@@ -60,8 +60,10 @@ class PDF(FPDF):
         self.cell(w=100, h=5, txt=title,ln=0,align='L')
         self.set_font('Times', size=11)
         self.cell(w=80, h=5, txt=dates, ln=1, align='R')
+        self.ln(1)
         self.cell(w=15, h=5,ln=0)
         self.multi_cell(165, 5, role_bullets, 0, 'L')
+        self.ln(h=3)
 
     def add_resume_org(self, org, user_input_df):
         is_org = user_input_df['Organization'] == org
@@ -72,6 +74,11 @@ class PDF(FPDF):
         self.cell(w=100, h=5, txt=org.upper(),ln=0,align='L')
         self.set_font('Times', size=11)
         self.cell(w=80, h=5, txt=location, ln=1, align='R')
+        self.ln(1)
+        date_sorted_roles = one_org.sort_values(by=['iso_start_date'], ascending=False)
+        unique_roles = date_sorted_roles['Title'].unique()
+        for title in unique_roles:
+            self.add_role(org, title, user_input_df)
 
     def add_resume_section(self, section_type, user_input_df):
         section_title = 'Experience' if section_type == 'Work' else 'Education'

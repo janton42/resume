@@ -85,9 +85,6 @@ def main():
     # current_roles = work_exp[is_current]
 
     section_type = 'Work'
-    org = 'Upwork'
-    location = 'San Mateo, CA'
-    title = 'Program Manager, Data Analytics'
 
     pdf = PDF()
     pdf.alias_nb_pages()
@@ -100,7 +97,7 @@ def main():
     # add a Position Title and the start/end dates on the same line,
     # left and right-aligned, respectively
     # pdf.add_role(org, title, user_input_df)
-    pdf.output(vars.tailored_resumes_filepath + 'tailored_49.pdf', 'F')
+    pdf.output(vars.tailored_resumes_filepath + 'tailored_58.pdf', 'F')
 
 
 
