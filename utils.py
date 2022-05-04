@@ -214,8 +214,8 @@ def chartTokenFreq(jd_set):
 
     # print('Finding the most impactful language...')
     # time.sleep(2.3)
-    print('Preparing vizualization...')
-    time.sleep(3.4)
+    # print('Preparing vizualization...')
+    # time.sleep(3.4)
 
     fig, (ax1, ax2, ax3) = plt.subplots(1,3, figsize=(15,10))
     fig.suptitle('Most Common Stems [top 20]')

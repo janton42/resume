@@ -19,6 +19,8 @@ import utils
 import vars
 import time
 
+from file_writer import PDF
+
 def main():
 
     # data = vars.devJdFilePath + 'job_posts.csv'
@@ -37,7 +39,7 @@ def main():
 
     # create a chart of the top 20 most used verbs, adjectives, and
     # nouns
-    jd_verb_stems = utils.chartTokenFreq(jd_set)
+    # jd_verb_stems = utils.chartTokenFreq(jd_set)
 
     # create an ordered list of verbs from job post(s)
     jd_verb_stems = utils.chartPrepper(jd_set,'VERB')[1]
@@ -89,7 +91,13 @@ def main():
 
     print(closest_roles_df.sort_values(by=['total_bullet_strength'], ascending=False))
 
-    matches = {}
+    pdf = PDF()
+    pdf.alias_nb_pages()
+    pdf.add_page()
+    pdf.set_font('Times', size=12)
+    for i in range(1, 41):
+        pdf.cell(0, 10, 'Printing line #' + str(i), 0, 1)
+    pdf.output(vars.tailored_resumes_filepath + 'tailored_1.pdf', 'F')
 
 
     # tokens = utils.tokenCompiler(vars.pm_jd_filenames, 'VERB')

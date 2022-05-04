@@ -20,6 +20,8 @@ devFilesPath = './dev/'
 
 devJdFilePath = devFilesPath + 'jds/'
 
+tailored_resumes_filepath = devFilesPath + 'tailored_resumes/'
+
 pos_tags = {
     'VERB': ['VB','VBG','VBD', 'VBN','VBN-HL','VERB'],
     'ADJ': ['JJ','JJ-T','ADJ'],
