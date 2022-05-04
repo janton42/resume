@@ -36,7 +36,7 @@ def main():
 
 
 
-    jd_parse_filenames = vars.ana_man_filenames
+    jd_parse_filenames = vars.pm_jd_filenames
     jd_set = [utils.txtParser(vars.devJdFilePath + filename) for filename in jd_parse_filenames]
     resume_txt = utils.txtParser(vars.devFilesPath + 'clean_resume.txt')
     # workaround for removing non-latin characters
@@ -97,7 +97,7 @@ def main():
     # add a Position Title and the start/end dates on the same line,
     # left and right-aligned, respectively
     # pdf.add_role(org, title, user_input_df)
-    pdf.output(vars.tailored_resumes_filepath + 'tailored_58.pdf', 'F')
+    pdf.output(vars.tailored_resumes_filepath + 'tailored_ling_test.pdf', 'F')
 
 
 

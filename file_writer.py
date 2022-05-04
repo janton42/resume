@@ -44,17 +44,19 @@ class PDF(FPDF):
         one_org = user_input_df[is_org]
         is_role = one_org['Title'] == title
         role = one_org[is_role]
+        is_valuable = role['total_bullet_strength'] > 0
+        most_valuable_bullets = role[is_valuable].sort_values(by='total_bullet_strength',ascending=False)
 
-        start_month = role['Start Month'].unique()[0]
-        start_year = role['Start Year'].unique()[0]
-        end_month = role['End Month'].unique()[0]
-        end_year = role['End Year'].unique()[0]
+        start_month = most_valuable_bullets['Start Month'].unique()[0]
+        start_year = most_valuable_bullets['Start Year'].unique()[0]
+        end_month = most_valuable_bullets['End Month'].unique()[0]
+        end_year = most_valuable_bullets['End Year'].unique()[0]
 
         start_date = '{} {}'.format(start_month, start_year)
         end_date = '{} {}'.format(end_month, end_year) if end_month != 'None' and end_year != 'None' else 'Present'
         dates = '{} - {}'.format(start_date,end_date)
 
-        role_bullets = utils.role_bullet_prepper(user_input_df, org, title)
+        role_bullets = '\n'.join(most_valuable_bullets['Bullet'])
 
         self.set_font('Times','B', size=11)
         self.cell(w=100, h=5, txt=title,ln=0,align='L')
