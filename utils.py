@@ -24,6 +24,7 @@ import string
 import re
 import nltk
 import collections
+import time
 
 import pandas as pd
 import numpy as np
@@ -191,17 +192,28 @@ def chartPrepper(jd_set, pos):
 # takes in a list of job descriptions
 def chartTokenFreq(jd_set):
 
+    # print('Parsing verb stems...')
+    # time.sleep(2)
     verbs = chartPrepper(jd_set, 'VERB')
     verb_group_data = verbs[0]
     verb_group_names = verbs[1]
 
+    # print('Parsing adjective stems...')
+    # time.sleep(2.0009)
     adj = chartPrepper(jd_set, 'ADJ')
     adj_group_data = adj[0]
     adj_group_names = adj[1]
 
+    # print('Parsing noun stems...')
+    # time.sleep(2.0009)
     nouns = chartPrepper(jd_set, 'NOUN')
     noun_group_data = nouns[0]
     noun_group_names = nouns[1]
+
+    # print('Finding the most impactful language...')
+    # time.sleep(2.3)
+    print('Preparing vizualization...')
+    time.sleep(3.4)
 
     fig, (ax1, ax2, ax3) = plt.subplots(1,3, figsize=(15,10))
     fig.suptitle('Most Common Stems [top 20]')
