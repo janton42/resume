@@ -84,20 +84,20 @@ def main():
     # is_current = user_input_df['iso_end_date'] == 'None'
     # current_roles = work_exp[is_current]
 
-    section_type = 'Work'
 
     pdf = PDF()
     pdf.alias_nb_pages()
     pdf.add_page()
     # Add a new resume section
-    pdf.add_resume_section(section_type, user_input_df)
+    pdf.add_resume_section('Work', user_input_df)
+    pdf.add_resume_section('Leadership', user_input_df)
     # Add a new Organization and its location on the same line, left-
     # and right-aligned, respectively
     # pdf.add_resume_org(org, location)
     # add a Position Title and the start/end dates on the same line,
     # left and right-aligned, respectively
     # pdf.add_role(org, title, user_input_df)
-    pdf.output(vars.tailored_resumes_filepath + 'tailored_ling_test.pdf', 'F')
+    pdf.output(vars.tailored_resumes_filepath + 'tailored_61.pdf', 'F')
 
 
 
