@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
+dot = '·'
 
 devFilesPath = './dev/'
 
@@ -125,13 +126,7 @@ nonsense = [
     'full-time',
     'ideal',
     'WhatsApp',
-    'program',
-    'Program',
     'position',
-    'manager',
-    'Manager',
-    'experi',
-    'manag',
     'quarterli',
     'daili',
     'weekli',

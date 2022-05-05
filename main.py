@@ -43,8 +43,8 @@ def main():
     decoded_resume_text = resume_txt.encode('latin-1', 'replace').decode('latin-1')
     # create a chart of the top 20 most used verbs, adjectives, and
     # nouns
-    # jd_verb_stems = utils.chartTokenFreq(jd_set)
-    print(type(decoded_resume_text))
+    jd_verb_stems = utils.chartTokenFreq(jd_set)
+    # print(type(decoded_resume_text))
     # create an ordered list of verbs from job post(s)
     jd_verb_stems = utils.chartPrepper(jd_set,'VERB')[1]
     jd_adj_stems = utils.chartPrepper(jd_set,'ADJ')[1]
@@ -91,13 +91,9 @@ def main():
     # Add a new resume section
     pdf.add_resume_section('Work', user_input_df)
     pdf.add_resume_section('Leadership', user_input_df)
-    # Add a new Organization and its location on the same line, left-
-    # and right-aligned, respectively
-    # pdf.add_resume_org(org, location)
-    # add a Position Title and the start/end dates on the same line,
-    # left and right-aligned, respectively
-    # pdf.add_role(org, title, user_input_df)
-    pdf.output(vars.tailored_resumes_filepath + 'tailored_61.pdf', 'F')
+    # TODO: Add Education
+    # TODO: Add Skills
+    pdf.output(vars.tailored_resumes_filepath + 'tailored_resume_DEMO_1.pdf', 'F')
 
 
 

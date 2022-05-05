@@ -217,7 +217,7 @@ def chartTokenFreq(jd_set):
     # print('Preparing vizualization...')
     # time.sleep(3.4)
 
-    fig, (ax1, ax2, ax3) = plt.subplots(1,3, figsize=(15,10))
+    fig, (ax1, ax2, ax3) = plt.subplots(1,3, figsize=(10,10))
     fig.suptitle('Most Common Stems [top 20]')
     ax1.barh(verb_group_names, verb_group_data)
     ax1.set_ylabel('Stems')
