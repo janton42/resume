@@ -88,11 +88,13 @@ def main():
     pdf = PDF()
     pdf.alias_nb_pages()
     pdf.add_page()
-    # Add a new resume section
+    # Add work experience section
     pdf.add_resume_section('Work', user_input_df)
+    # Add leadership and activities section
     pdf.add_resume_section('Leadership', user_input_df)
     # TODO: Add Education
-    # TODO: Add Skills
+
+    # TODO: Add skills section
     pdf.output(vars.tailored_resumes_filepath + 'tailored_resume_DEMO_1.pdf', 'F')
 
 
