@@ -134,3 +134,5 @@ db/
 api.py
 
 /dev
+.DS_Store
+
