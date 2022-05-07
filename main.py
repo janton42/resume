@@ -38,9 +38,9 @@ def main():
 
     jd_parse_filenames = vars.pm_jd_filenames
     jd_set = [utils.txtParser(vars.devJdFilePath + filename) for filename in jd_parse_filenames]
-    resume_txt = utils.txtParser(vars.devFilesPath + 'clean_resume.txt')
+    # resume_txt = utils.txtParser(vars.devFilesPath + 'clean_resume.txt')
     # workaround for removing non-latin characters
-    decoded_resume_text = resume_txt.encode('latin-1', 'replace').decode('latin-1')
+    # decoded_resume_text = resume_txt.encode('latin-1', 'replace').decode('latin-1')
     # create a chart of the top 20 most used verbs, adjectives, and
     # nouns
     jd_verb_stems = utils.chartTokenFreq(jd_set)
@@ -51,8 +51,8 @@ def main():
     jd_noun_stems = utils.chartPrepper(jd_set,'NOUN')[1]
 
     # stems the verb suggestions from the Harvard template
-    action_words_filepath = vars.devFilesPath + 'action_types.csv'
-    harvard_action_tokens_df = utils.actionTokenGetter(action_words_filepath)
+    # action_words_filepath = vars.devFilesPath + 'action_types.csv'
+    # harvard_action_tokens_df = utils.actionTokenGetter(action_words_filepath)
     # print(harvard_action_tokens_df)
 
 

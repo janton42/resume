@@ -56,15 +56,15 @@ pos_tags = {
 
 
 pm_jd_filenames = [
-    'prog_man_learn_sys_github_clean.txt',
-    'prog_man_plus_clean.txt',
-    'prog_man_tradedesk_clean.txt',
-    'prog_man_whatsapp_clean.txt',
-    'prog_man_prod_ops_chainlinklabs_clean.txt',
+    # 'prog_man_learn_sys_github_clean.txt',
+    # 'prog_man_plus_clean.txt',
+    # 'prog_man_tradedesk_clean.txt',
+    # 'prog_man_whatsapp_clean.txt',
+    # 'prog_man_prod_ops_chainlinklabs_clean.txt',
     'prog_man_content_prod_coursera.txt',
-    'prog_man_mem_cust_insights_linkedin_clean.txt',
-    'prog_man_operations_tech_stripe_clean.txt',
-    'localization_prog_man_meta_clean.txt'
+    # 'prog_man_mem_cust_insights_linkedin_clean.txt',
+    # 'prog_man_operations_tech_stripe_clean.txt',
+    # 'localization_prog_man_meta_clean.txt'
 ]
 
 ana_man_filenames = [

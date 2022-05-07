@@ -26,8 +26,8 @@ from fpdf import FPDF
 class PDF(FPDF):
     def header(self):
         self.person = vars.dev_person
-        self.image('./dev/visual/HiredLabs-Icon.png',x=91, y=8, h=7)
-        self.image('./dev/visual/HiredLabs-Icon.png',x=121, y=8, h=7)
+        # self.image('./dev/visual/HiredLabs-Icon.png',x=91, y=8, h=7)
+        # self.image('./dev/visual/HiredLabs-Icon.png',x=121, y=8, h=7)
         self.set_font('Arial','B', 12)
         self.cell(200, 5, self.person['name'], 'B', 1, 'C')
         self.set_font('Arial',style='',size=10)
