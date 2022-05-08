@@ -37,11 +37,6 @@ from PyPDF2 import PdfFileReader
 from nltk.tokenize import WhitespaceTokenizer
 # from nltk.corpus import brown, WordNet
 
-# Added to address errors raised when running on MacOS
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('universal_tagset')
-
 # pulls the text out of a pdf
 def pdfParser(filename, pageNumber):
         filePath = vars.devFilesPath + filename
