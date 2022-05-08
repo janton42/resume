@@ -52,7 +52,7 @@ def txtParser(filename):
         return txtContents
 
 # data cleaning
-def cleanData(text):
+def clean_data(text):
     # gather stopwords from the nltk corpus
     stopword = nltk.corpus.stopwords.words('english')
     # initialize a stemmer
@@ -93,20 +93,20 @@ def harvardKeyworder(wordlist):
 def fetchBaseData(filepath):
     data = pd.read_csv(filepath, header=None)
     data.columns = ['label', 'body_text']
-    # data['body_text_nostop'] = data['body_text'].apply(lambda x: cleanData(x.lower()))
+    # data['body_text_nostop'] = data['body_text'].apply(lambda x: clean_data(x.lower()))
     return data
 
 
-def countVectorize():
-    data = pd.read_csv(vars.devJdFilePath + 'job_posts.csv', header=None)
-    data.columns = ['label', 'body_text']
+def count_vectorize():
+    # data = pd.read_csv(vars.devJdFilePath + 'job_posts.csv', header=None)
+    # data.columns = ['label', 'body_text']
     # this step is needed if using ngram count vectorizing
     # not needed for TFIDF or simple count vectorizing
-    # data['cleaned_text'] = data['body_text'].apply(lambda x: cleanData(x))
+    # data['cleaned_text'] = data['body_text'].apply(lambda x: clean_data(x))
     # set the number of ngrams from each gram is a token. Multiple
     # ngrams
     # ngramVect = CountVectorizer(2,2)
-    tfidfVect = TfidfVectorizer(analyzer=cleanData)
+    tfidfVect = TfidfVectorizer(analyzer=clean_data)
     X_counts = tfidfVect.fit_transform(data['body_text'])
     X_counts_df = pd.DataFrame(X_counts.toarray())
     X_counts_df.columns = tfidfVect.get_feature_names()

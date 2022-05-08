@@ -21,8 +21,10 @@ import time
 from datetime import date
 import pandas as pd
 import regex
+import nltk
 
 from file_writer import PDF
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 def main():
 
@@ -35,15 +37,18 @@ def main():
     # utils.harvardKeyworder(extracted)
 
 
-
     jd_parse_filenames = vars.pm_jd_filenames
+    # this is the type of simple corpus that scikit learn can use for count TFIDF
     jd_set = [utils.txtParser(vars.devJdFilePath + filename) for filename in jd_parse_filenames]
+    vectorizer = TfidfVectorizer(ngram_range=(1,2), stop_words=nltk.corpus.stopwords.words('english'))
+    print(vectorizer.fit_transform(jd_set))
+    # print(jd_set)
     resume_txt = utils.txtParser(vars.devFilesPath + 'clean_resume.txt')
     # workaround for removing non-latin characters
     decoded_resume_text = resume_txt.encode('latin-1', 'replace').decode('latin-1')
     # create a chart of the top 20 most used verbs, adjectives, and
     # nouns
-    jd_verb_stems = utils.chartTokenFreq(jd_set)
+    # jd_verb_stems = utils.chartTokenFreq(jd_set)
     # print(type(decoded_resume_text))
     # create an ordered list of verbs from job post(s)
     jd_verb_stems = utils.chartPrepper(jd_set,'VERB')[1]
@@ -85,17 +90,17 @@ def main():
     # current_roles = work_exp[is_current]
 
 
-    pdf = PDF()
-    pdf.alias_nb_pages()
-    pdf.add_page()
-    # Add work experience section
-    pdf.add_resume_section('Work', user_input_df)
-    # Add leadership and activities section
-    pdf.add_resume_section('Leadership', user_input_df)
-    # TODO: Add Education
-
-    # TODO: Add skills section
-    pdf.output(vars.tailored_resumes_filepath + 'tailored_resume_DEMO_1.pdf', 'F')
+    # pdf = PDF()
+    # pdf.alias_nb_pages()
+    # pdf.add_page()
+    # # Add work experience section
+    # pdf.add_resume_section('Work', user_input_df)
+    # # Add leadership and activities section
+    # pdf.add_resume_section('Leadership', user_input_df)
+    # # TODO: Add Education
+    #
+    # # TODO: Add skills section
+    # pdf.output(vars.tailored_resumes_filepath + 'tailored_resume_DEMO_1.pdf', 'F')
 
 
 
