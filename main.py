@@ -117,6 +117,7 @@ def main():
     # Add leadership and activities section
     pdf.add_resume_section('Leadership', user_input_df)
     # TODO: Add Education
+    pdf.add_resume_section('Education', user_input_df)
 
     # TODO: Add skills section
     pdf.output(vars.tailored_resumes_filepath + 'tailored_resume_DEMO_2.pdf', 'F')

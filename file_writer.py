@@ -39,7 +39,7 @@ class PDF(FPDF):
         ), 0, 0, 'C')
         self.ln(10)
 
-    def add_role(self, org, title, user_input_df, section_type):
+    def add_role(self, org, title, user_input_df):
         is_org = user_input_df['Organization'] == org
         one_org = user_input_df[is_org]
         is_role = one_org['Title'] == title
@@ -57,7 +57,7 @@ class PDF(FPDF):
 
         dates = '{} - {}'.format(start_date,end_date)
         most_valuable_bullets = most_valuable_bullets[:3]
-        role_bullets = '\n\n'.join(most_valuable_bullets['Bullet'])
+        role_bullets = '\n'.join(most_valuable_bullets['Bullet'])
 
         self.set_font('Times','B', size=11)
         self.cell(w=100, h=5, txt=title,ln=0,align='L')
@@ -67,6 +67,26 @@ class PDF(FPDF):
         self.cell(w=8, h=5,ln=0)
         self.multi_cell(172, 5, role_bullets, 0, 'L')
         self.ln(h=4)
+
+    def add_course(self, org, title, user_input_df):
+        is_org = user_input_df['Organization'] == org
+        one_org = user_input_df[is_org]
+        is_course = one_org['Title'] == title
+        course = one_org[is_course]
+
+        start_month = course['Start Month'].unique()[0]
+        start_year = course['Start Year'].unique()[0]
+        end_month = course['End Month'].unique()[0]
+        end_year = course['End Year'].unique()[0]
+        start_date = '{} {}'.format(start_month, start_year)
+        end_date = '{} {}'.format(end_month, end_year) if end_month != 'None' and end_year != 'None' else 'Present'
+        dates = '{} - {}'.format(start_date,end_date)
+
+        self.set_font('Times','B', size=11)
+        self.cell(w=100, h=5, txt=title,ln=0,align='L')
+        self.set_font('Times', size=11)
+        self.cell(w=80, h=5, txt=dates, ln=1, align='R')
+        self.ln(4)
 
     def add_resume_org(self, org, user_input_df, section_type):
         is_org = user_input_df['Organization'] == org
@@ -81,7 +101,10 @@ class PDF(FPDF):
         date_sorted_roles = one_org.sort_values(by=['iso_start_date'], ascending=False)
         unique_roles = date_sorted_roles['Title'].unique()
         for title in unique_roles:
-            self.add_role(org, title, user_input_df,section_type)
+            if section_type == 'Work':
+                self.add_role(org, title, user_input_df)
+            elif section_type == 'Education':
+                self.add_course(org, title, user_input_df)
 
     def add_resume_section(self, section_type, user_input_df):
         if section_type == 'Work':
@@ -99,8 +122,18 @@ class PDF(FPDF):
             self.set_font('Times','B', size=11)
             self.cell(w=200, h=5, txt=section_title, ln=1, align='C')
             is_leadership_exp = user_input_df['Type'] == 'Leadership'
-            leadership_exp =  user_input_df[is_leadership_exp]
+            leadership_exp = user_input_df[is_leadership_exp]
             date_sorted_orgs = leadership_exp.sort_values(by=['iso_start_date'], ascending=False)
+            unique_orgs = date_sorted_orgs['Organization'].unique()
+            for org in unique_orgs:
+                self.add_resume_org(org, user_input_df, section_type)
+        elif section_type == 'Education':
+            section_title = 'Education'
+            self.set_font('Times','B', size=11)
+            self.cell(w=200, h=5, txt=section_title, ln=1, align='C')
+            is_edu_exp = user_input_df['Type'] == 'Education'
+            edu_exp = user_input_df[is_edu_exp]
+            date_sorted_orgs = edu_exp.sort_values(by=['iso_start_date'], ascending=False)
             unique_orgs = date_sorted_orgs['Organization'].unique()
             for org in unique_orgs:
                 self.add_resume_org(org, user_input_df, section_type)
