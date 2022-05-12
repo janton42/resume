@@ -26,8 +26,8 @@ from fpdf import FPDF
 class PDF(FPDF):
     def header(self):
         self.person = vars.dev_person
-        self.image('./dev/visual/HiredLabs-Icon.png',x=91, y=8, h=7)
-        self.image('./dev/visual/HiredLabs-Icon.png',x=121, y=8, h=7)
+        # self.image('./dev/visual/HiredLabs-Icon.png',x=91, y=8, h=7)
+        # self.image('./dev/visual/HiredLabs-Icon.png',x=121, y=8, h=7)
         self.set_font('Arial','B', 12)
         self.cell(200, 5, self.person['name'], 'B', 1, 'C')
         self.set_font('Arial',style='',size=10)
@@ -56,17 +56,17 @@ class PDF(FPDF):
         end_date = '{} {}'.format(end_month, end_year) if end_month != 'None' and end_year != 'None' else 'Present'
 
         dates = '{} - {}'.format(start_date,end_date)
-
-        role_bullets = '\n'.join(most_valuable_bullets['Bullet'])
+        most_valuable_bullets = most_valuable_bullets[:3]
+        role_bullets = '\n\n'.join(most_valuable_bullets['Bullet'])
 
         self.set_font('Times','B', size=11)
         self.cell(w=100, h=5, txt=title,ln=0,align='L')
         self.set_font('Times', size=11)
         self.cell(w=80, h=5, txt=dates, ln=1, align='R')
         self.ln(1)
-        self.cell(w=15, h=5,ln=0)
-        self.multi_cell(165, 5, role_bullets, 0, 'L')
-        self.ln(h=3)
+        self.cell(w=8, h=5,ln=0)
+        self.multi_cell(172, 5, role_bullets, 0, 'L')
+        self.ln(h=4)
 
     def add_resume_org(self, org, user_input_df, section_type):
         is_org = user_input_df['Organization'] == org

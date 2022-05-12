@@ -15,4 +15,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
-from sklearn.feature_extraction.text
+
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch
+
+def page_maker():
+    doc = SimpleDocTemplate(
+        './dev/tailored_resumes/demo_platypus.pdf',
+        pagesize=letter,
+        # rightMargin=72, leftMargin=72,
+        # topMargin=72, bottomMargin=18,
+    )
+
+    styles = getSampleStyleSheet()
+    flowables = []
+    spacer = Spacer(1, 0.25 * inch)
+    for i in range(25):
+        text = 'Hello, I am a paragraph.'
+        para = Paragraph(text,style=styles['Normal'])
+        flowables.append(para)
+        flowables.append(spacer)
+
+    doc.build(flowables)
+
+if __name__ == '__main__':
+    page_maker()

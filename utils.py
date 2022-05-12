@@ -35,6 +35,7 @@ import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from PyPDF2 import PdfFileReader
 from nltk.tokenize import WhitespaceTokenizer
+from vars import english_and_contextual_stops as stop_set
 # from nltk.corpus import brown, WordNet
 
 # pulls the text out of a pdf
@@ -220,15 +221,18 @@ def chartTokenFreq(jd_set):
     fig, (ax1, ax2, ax3) = plt.subplots(1,3, figsize=(10,10))
     fig.suptitle('Most Common Stems [top 20]')
     ax1.barh(verb_group_names, verb_group_data)
+    ax1.invert_yaxis()
     ax1.set_ylabel('Stems')
     ax1.set_xlabel('Frequency')
     ax1.set_title('Verbs')
 
     ax2.barh(adj_group_names, adj_group_data)
+    ax2.invert_yaxis()
     ax2.set_xlabel('Frequency')
     ax2.set_title('Adjectives')
 
     ax3.barh(noun_group_names, noun_group_data)
+    ax3.invert_yaxis()
     ax3.set_xlabel('Frequency')
     ax3.set_title('Nouns')
     plt.show()
@@ -253,9 +257,30 @@ def role_bullet_prepper(user_input_df, org, title):
     bullet_txt = '\n'.join(one_role['Bullet'])
 
     return bullet_txt
-# def getSynonyms(token_set):
-#     synonyms = []
-#     for token in token_set:
-#         for syn in WordNet.synsets([token]):
-#             sunonmys.appen(syn)
-#     return synonyms
+
+def ngram_weighter(lower_bound, upper_bound, filepath_list):
+    '''
+    takes a list of file paths, boundaries (upper and lower) for
+    the ngram_range parameter of TfidfVectorizer
+    returns the top 20 most important ngrams
+    lower_bound = integer representing the lower bound of ngram_range
+    upper_bound = integer representing the upper bound of ngram_range
+    filepath_list = list of filepaths to job post text files
+
+    '''
+    vectorizer = TfidfVectorizer(input='filename', ngram_range=(lower_bound,upper_bound), stop_words=stop_set)
+    X_tfidf = vectorizer.fit_transform(filepath_list)
+
+    end = X_tfidf.shape[1]
+    feature_names = vectorizer.get_feature_names()
+    X_tfidf_df = pd.DataFrame(X_tfidf.toarray())
+    X_tfidf_df.columns = feature_names
+    total = X_tfidf_df.sum()
+    total.name = 'Total'
+
+    X_tfidf_df = X_tfidf_df.append(total.transpose())
+
+    X_tfidf_df.sort_values(by='Total', axis=1, inplace=True, ascending=False, na_position='last')
+    top_fifty = X_tfidf_df.iloc[:,:20].columns
+
+    return top_fifty
