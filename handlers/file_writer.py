@@ -39,14 +39,23 @@ class PDF(FPDF):
         ), 0, 0, 'C')
         self.ln(10)
 
-    def add_role(self, org, title, user_input_df):
+    def add_role(self, org, title, user_input_df, section_type):
         is_org = user_input_df['Organization'] == org
         one_org = user_input_df[is_org]
         is_role = one_org['Title'] == title
         role = one_org[is_role]
 
-        is_valuable = role['total_bullet_strength'] > 0
-        most_valuable_bullets = role[is_valuable].sort_values(by='total_bullet_strength',ascending=False)
+        if section_type == 'Work':
+            is_valuable = role['total_bullet_strength'] > 0
+            most_valuable_bullets = role[is_valuable].sort_values(by='total_bullet_strength', ascending=False)
+            try:
+                start_month = most_valuable_bullets['Start Month'].unique()[0]
+            except:
+                most_valuable_bullets = role.sort_values(by='total_bullet_strength',ascending=False)
+                print(most_valuable_bullets)
+
+        elif section_type == 'Leadership':
+            most_valuable_bullets = role.sort_values(by='total_bullet_strength',ascending=False)
 
         start_month = most_valuable_bullets['Start Month'].unique()[0]
         start_year = most_valuable_bullets['Start Year'].unique()[0]
@@ -101,8 +110,8 @@ class PDF(FPDF):
         date_sorted_roles = one_org.sort_values(by=['iso_start_date'], ascending=False)
         unique_roles = date_sorted_roles['Title'].unique()
         for title in unique_roles:
-            if section_type == 'Work':
-                self.add_role(org, title, user_input_df)
+            if section_type == 'Work' or section_type == 'Leadership':
+                self.add_role(org, title, user_input_df, section_type)
             elif section_type == 'Education':
                 self.add_course(org, title, user_input_df)
 

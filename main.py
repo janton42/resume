@@ -19,70 +19,45 @@ import utils
 import vars
 import time
 from datetime import date
-import pandas as pd
 import regex
 import nltk
 import matplotlib
 
-from file_writer import PDF
+from handlers.file_writer import PDF
+from handlers.file_parser import txt_parser, csv_to_df
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 def main():
+    # STEP 1
+    # Analyze a job description, and show the highest weighted ngrams
+    # so jobseekers can write tailored bullets
 
-    # data = vars.devJdFilePath + 'job_posts.csv'
-    # Create a spreadsheet from the Harvard Resume template verbs to
-    # use on your resume.
-    # filename = 'resumeTemplate.pdf'
-    # pageNumber = 3
-    # extracted = utils.pdfParser(filename, pageNumber)
-    # utils.harvardKeyworder(extracted)
-
-    # print(utils.txtParser(vars.resume_text_single_path[0]))
-
-
+    corpus = utils.corpus_prepper('./input/')
+    utils.jd_analyzer(corpus)
+    #
     # utils.chartTokenFreq(jd_set)
 
-    resume_txt = utils.txtParser(vars.devFilesPath + 'clean_resume.txt')
-    # workaround for removing non-latin characters
-    decoded_resume_text = resume_txt.encode('latin-1', 'replace').decode('latin-1')
+    # resume_txt = utils.txtParser(vars.devFilesPath + 'clean_resume.txt')
+    # # workaround for removing non-latin characters
+    # decoded_resume_text = resume_txt.encode('latin-1', 'replace').decode('latin-1')
     # create a chart of the top 20 most used verbs, adjectives, and
     # nouns
     # jd_verb_stems = utils.chartTokenFreq(jd_set)
     # print(type(decoded_resume_text))
 
-    jd_parse_filenames = vars.pm_jd_filenames
+    # jd_parse_filenames = vars.ling_jd_filenames
     # this is the type of simple corpus that scikit learn can use for count TFIDF
-    jd_set = [utils.txtParser(filename) for filename in jd_parse_filenames]
+    jd_set = [txt_parser(filename) for filename in corpus]
     # create an ordered list of verbs from job post(s)
+    # utils.chartTokenFreq(jd_set)
     jd_verb_stems = utils.chartPrepper(jd_set,'VERB')[1]
     jd_adj_stems = utils.chartPrepper(jd_set,'ADJ')[1]
     jd_noun_stems = utils.chartPrepper(jd_set,'NOUN')[1]
 
-    # corpus = vars.ana_man_filenames
-    #
-    # unigrams = utils.ngram_weighter(1,1,corpus)
-    # bigrams = utils.ngram_weighter(2,2,corpus)
-    # trigrams = utils.ngram_weighter(3,3,corpus)
-    #
-    # print('\nUnigrams\n')
-    # for u in unigrams:
-    #     print(u)
-    # print('\nBigrams\n')
-    # for b in bigrams:
-    #     print(b)
-    # print('\nTrigrams\n')
-    # for t in trigrams:
-    #     print(t)
-
-    # stems the verb suggestions from the Harvard template
-    # action_words_filepath = vars.devFilesPath + 'action_types.csv'
-    # harvard_action_tokens_df = utils.actionTokenGetter(action_words_filepath)
-    # print(harvard_action_tokens_df)
-
-
     # get user input from a .csv file and convert into a pandas data frame
-    user_input_filepath = vars.devFilesPath + 'user_input.csv'
-    user_input_df = utils.csv_to_df(user_input_filepath)
+    user_input_filepath = './user_input/user_input.csv'
+    user_input_df = csv_to_df(user_input_filepath)
     # stem the verbs in user input resume bullet statements
     # print('Calculating your verb strength...')
     # time.sleep(2.0009)
@@ -120,7 +95,7 @@ def main():
     pdf.add_resume_section('Education', user_input_df)
 
     # TODO: Add skills section
-    pdf.output(vars.tailored_resumes_filepath + 'tailored_resume_DEMO_2.pdf', 'F')
+    pdf.output('./output/Jeff Stock_resume_DEMO.pdf', 'F')
 
 
 
@@ -128,5 +103,6 @@ def main():
     # print(tokens[4])
 
     #Juandale Pringle Windlebug the III has claimed ownership of this vessel
+
 if __name__ == '__main__':
     main()

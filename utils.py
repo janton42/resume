@@ -33,24 +33,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from PyPDF2 import PdfFileReader
 from nltk.tokenize import WhitespaceTokenizer
+from handlers.file_parser import txt_parser
+
 from vars import english_and_contextual_stops as stop_set
+
 # from nltk.corpus import brown, WordNet
-
-# pulls the text out of a pdf
-def pdfParser(filename, pageNumber):
-        filePath = vars.devFilesPath + filename
-        with open(filePath,'rb') as file:
-            reader = PdfFileReader(file)
-            pdfContents = reader.getPage(pageNumber).extractText()
-            return pdfContents
-
-#pulls text from a .txt file
-def txtParser(filename):
-    with open(filename) as file:
-        txtContents = file.read()
-        return txtContents
 
 # data cleaning
 def clean_data(text):
@@ -72,12 +60,7 @@ def actionTokenGetter(filename):
     working['stems'] = [ps.stem(x.lower()) for x in working['action']]
     return working
 
-# takes in a .csv file and returns a pandas data frame object.
-def csv_to_df(filename):
-    csv_in = pd.read_csv(filename)
-    working = pd.DataFrame(csv_in)
 
-    return working
 
 # removes the words from the Harvard resume
 def harvardKeyworder(wordlist):
@@ -192,6 +175,7 @@ def chartPrepper(jd_set, pos):
     ranked = dataGrouper(common_tokens)
     return ranked
 
+
 # takes in a list of job descriptions
 def chartTokenFreq(jd_set):
 
@@ -281,6 +265,26 @@ def ngram_weighter(lower_bound, upper_bound, filepath_list):
     X_tfidf_df = X_tfidf_df.append(total.transpose())
 
     X_tfidf_df.sort_values(by='Total', axis=1, inplace=True, ascending=False, na_position='last')
-    top_fifty = X_tfidf_df.iloc[:,:20].columns
+    top_twenty = X_tfidf_df.iloc[:,:20].columns
 
-    return top_fifty
+    return top_twenty
+
+def corpus_prepper(corpus: str) -> list:
+    jds = os.listdir(path=corpus)
+    print(jds)
+    return [corpus + jd for jd in jds]
+
+
+def jd_analyzer(jds):
+    unigrams = ngram_weighter(1,1,jds)
+    bigrams = ngram_weighter(2,2,jds)
+    trigrams = ngram_weighter(3,3,jds)
+    print('\nUnigrams\n')
+    for u in unigrams:
+        print(u)
+    print('\nBigrams\n')
+    for b in bigrams:
+        print(b)
+    print('\nTrigrams\n')
+    for t in trigrams:
+        print(t)

@@ -134,3 +134,6 @@ db/
 api.py
 
 /dev
+/input
+/output
+/user_input

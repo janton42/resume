@@ -48,16 +48,18 @@ contextual_stops = [
     'strong'
     ]
 
+dry_run_1 = [
+    './dev/raw_jd/ops_manager_hopskipdrive.txt',
+    './dev/raw_jd/ops_manager_workmoney.txt',
+    './dev/raw_jd/program_manager_autodesk.txt'
+]
+
 def get_stops(stops):
     for w in eng_stop_words:
         stops.append(w)
     return stops
 
 english_and_contextual_stops = get_stops(contextual_stops)
-
-
-
-dot = '·'
 
 devFilesPath = './dev/'
 
@@ -86,7 +88,7 @@ dev_person = {
     'phone': '+1-707-301-8624'
 }
 
-devJdFilePath = devFilesPath + 'jds/'
+dev_jd_file_path = devFilesPath + 'raw_jd/'
 
 tailored_resumes_filepath = devFilesPath + 'tailored_resumes/'
 
@@ -131,7 +133,8 @@ ling_jd_filenames = [
 ]
 
 python_dev_jd_filenames = [
-    'python_dev_tektalent_clean.txt'
+    # 'python_dev_tektalent_clean.txt',
+    './dev/raw_jd/python_2.txt'
 ]
 
 all_jd_filenames = [
