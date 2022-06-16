@@ -14,8 +14,52 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
+import nltk
 
-dot = '·'
+eng_stop_words = nltk.corpus.stopwords.words('english')
+
+contextual_stops = [
+    'experience',
+    'etc',
+    'role',
+    'candidate',
+    'greenlight',
+    'preferred',
+    'qualifications',
+    'weekly',
+    'daily',
+    'monthly',
+    'quarterly',
+    'key',
+    'work',
+    'dollar',
+    'uber',
+    'next',
+    'com',
+    'jan',
+    'dec',
+    'jun',
+    '17',
+    '15',
+    'playstation',
+    'new',
+    'nextdoor',
+    'across',
+    'strong'
+    ]
+
+dry_run_1 = [
+    './dev/raw_jd/ops_manager_hopskipdrive.txt',
+    './dev/raw_jd/ops_manager_workmoney.txt',
+    './dev/raw_jd/program_manager_autodesk.txt'
+]
+
+def get_stops(stops):
+    for w in eng_stop_words:
+        stops.append(w)
+    return stops
+
+english_and_contextual_stops = get_stops(contextual_stops)
 
 devFilesPath = './dev/'
 
@@ -38,13 +82,13 @@ month_ints = {
 
 dev_person = {
     'name': 'Jeff Stock',
-    'email': 'jAntonStock@gmail.com',
+    'email': 'JAntonStock@gmail.com',
     'location': 'San Mateo, CA',
     'linkedin': 'linkedin.com/in/stockj',
     'phone': '+1-707-301-8624'
 }
 
-devJdFilePath = devFilesPath + 'jds/'
+dev_jd_file_path = devFilesPath + 'raw_jd/'
 
 tailored_resumes_filepath = devFilesPath + 'tailored_resumes/'
 
@@ -68,23 +112,24 @@ pm_jd_filenames = [
 ]
 
 ana_man_filenames = [
-    'ana_insights_man_clean.txt',
-    'cust_ana_man_nextdoor_clean.txt',
-    'data_ana_man_bailielumber_clean.txt',
-    'people_ana_man_pwc_clean.txt',
-    'strat_insights_ana_man_newtonx_clean.txt'
+    # './dev/jds/ana_insights_man_clean.txt',
+    # './dev/jds/cust_ana_man_nextdoor_clean.txt',
+    # './dev/jds/data_ana_man_bailielumber_clean.txt',
+    './dev/jds/people_ana_man_pwc_clean.txt',
+    # './dev/jds/strat_insights_ana_man_newtonx_clean.txt'
 ]
 
 intel_analyst_filenames = [
-    'intel_analyst_alliedunited_clean.txt'
+    './dev/jds/intel_analyst_alliedunited_clean.txt'
 ]
 
 ling_jd_filenames = [
-    'linguist_advertiser_safety_google_clean.txt'
+    './dev/jds/linguist_advertiser_safety_google_clean.txt'
 ]
 
 python_dev_jd_filenames = [
-    'python_dev_tektalent_clean.txt'
+    # 'python_dev_tektalent_clean.txt',
+    './dev/raw_jd/python_2.txt'
 ]
 
 all_jd_filenames = [
@@ -105,6 +150,31 @@ all_jd_filenames = [
     'linguist_advertiser_safety_google_clean.txt',
     'localization_prog_man_meta_clean.txt',
     'python_dev_tektalent_clean.txt'
+]
+
+all_raw_jd = [
+    './dev/raw_jd/prog_man_mem_cust_insights_linkedin.txt',
+    './dev/programManager_1.txt',
+    './dev/programManager_2.txt',
+    './dev/programManager_3.txt',
+    './dev/programManager_4.txt'
+    ]
+
+raw_jd_single_path = ['./dev/raw_jd/ana_insights_man_uber.txt']
+resume_pdf_single_path = ['./dev/resume.pdf']
+resume_text_single_path = ['./dev/resume.txt']
+
+# a word or phrase meant to inform readers (job seekers) of the most
+# relevant skills and technologies needed for a role
+
+anchors = [
+    'qualified candidates',
+    'qualifications',
+    'requirements',
+    'required'
+    'responsibilities',
+    'qualifications'
+
 ]
 
 nonsense = [

@@ -33,26 +33,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from PyPDF2 import PdfFileReader
 from nltk.tokenize import WhitespaceTokenizer
+from handlers.file_parser import txt_parser
+
+from vars import english_and_contextual_stops as stop_set
+
 # from nltk.corpus import brown, WordNet
 
-# pulls the text out of a pdf
-def pdfParser(filename, pageNumber):
-        filePath = vars.devFilesPath + filename
-        with open(filePath,'rb') as file:
-            reader = PdfFileReader(file)
-            pdfContents = reader.getPage(pageNumber).extractText()
-            return pdfContents
-
-#pulls text from a .txt file
-def txtParser(filename):
-    with open(filename) as file:
-        txtContents = file.read()
-        return txtContents
-
 # data cleaning
-def cleanData(text):
+def clean_data(text):
     # gather stopwords from the nltk corpus
     stopword = nltk.corpus.stopwords.words('english')
     # initialize a stemmer
@@ -71,12 +60,7 @@ def actionTokenGetter(filename):
     working['stems'] = [ps.stem(x.lower()) for x in working['action']]
     return working
 
-# takes in a .csv file and returns a pandas data frame object.
-def csv_to_df(filename):
-    csv_in = pd.read_csv(filename)
-    working = pd.DataFrame(csv_in)
 
-    return working
 
 # removes the words from the Harvard resume
 def harvardKeyworder(wordlist):
@@ -93,20 +77,20 @@ def harvardKeyworder(wordlist):
 def fetchBaseData(filepath):
     data = pd.read_csv(filepath, header=None)
     data.columns = ['label', 'body_text']
-    # data['body_text_nostop'] = data['body_text'].apply(lambda x: cleanData(x.lower()))
+    # data['body_text_nostop'] = data['body_text'].apply(lambda x: clean_data(x.lower()))
     return data
 
 
-def countVectorize():
-    data = pd.read_csv(vars.devJdFilePath + 'job_posts.csv', header=None)
-    data.columns = ['label', 'body_text']
+def count_vectorize():
+    # data = pd.read_csv(vars.devJdFilePath + 'job_posts.csv', header=None)
+    # data.columns = ['label', 'body_text']
     # this step is needed if using ngram count vectorizing
     # not needed for TFIDF or simple count vectorizing
-    # data['cleaned_text'] = data['body_text'].apply(lambda x: cleanData(x))
+    # data['cleaned_text'] = data['body_text'].apply(lambda x: clean_data(x))
     # set the number of ngrams from each gram is a token. Multiple
     # ngrams
     # ngramVect = CountVectorizer(2,2)
-    tfidfVect = TfidfVectorizer(analyzer=cleanData)
+    tfidfVect = TfidfVectorizer(analyzer=clean_data)
     X_counts = tfidfVect.fit_transform(data['body_text'])
     X_counts_df = pd.DataFrame(X_counts.toarray())
     X_counts_df.columns = tfidfVect.get_feature_names()
@@ -191,6 +175,7 @@ def chartPrepper(jd_set, pos):
     ranked = dataGrouper(common_tokens)
     return ranked
 
+
 # takes in a list of job descriptions
 def chartTokenFreq(jd_set):
 
@@ -220,15 +205,18 @@ def chartTokenFreq(jd_set):
     fig, (ax1, ax2, ax3) = plt.subplots(1,3, figsize=(10,10))
     fig.suptitle('Most Common Stems [top 20]')
     ax1.barh(verb_group_names, verb_group_data)
+    ax1.invert_yaxis()
     ax1.set_ylabel('Stems')
     ax1.set_xlabel('Frequency')
     ax1.set_title('Verbs')
 
     ax2.barh(adj_group_names, adj_group_data)
+    ax2.invert_yaxis()
     ax2.set_xlabel('Frequency')
     ax2.set_title('Adjectives')
 
     ax3.barh(noun_group_names, noun_group_data)
+    ax3.invert_yaxis()
     ax3.set_xlabel('Frequency')
     ax3.set_title('Nouns')
     plt.show()
@@ -253,9 +241,50 @@ def role_bullet_prepper(user_input_df, org, title):
     bullet_txt = '\n'.join(one_role['Bullet'])
 
     return bullet_txt
-# def getSynonyms(token_set):
-#     synonyms = []
-#     for token in token_set:
-#         for syn in WordNet.synsets([token]):
-#             sunonmys.appen(syn)
-#     return synonyms
+
+def ngram_weighter(lower_bound, upper_bound, filepath_list):
+    '''
+    takes a list of file paths, boundaries (upper and lower) for
+    the ngram_range parameter of TfidfVectorizer
+    returns the top 20 most important ngrams
+    lower_bound = integer representing the lower bound of ngram_range
+    upper_bound = integer representing the upper bound of ngram_range
+    filepath_list = list of filepaths to job post text files
+
+    '''
+    vectorizer = TfidfVectorizer(input='filename', ngram_range=(lower_bound,upper_bound), stop_words=stop_set)
+    X_tfidf = vectorizer.fit_transform(filepath_list)
+
+    end = X_tfidf.shape[1]
+    feature_names = vectorizer.get_feature_names()
+    X_tfidf_df = pd.DataFrame(X_tfidf.toarray())
+    X_tfidf_df.columns = feature_names
+    total = X_tfidf_df.sum()
+    total.name = 'Total'
+
+    X_tfidf_df = X_tfidf_df.append(total.transpose())
+
+    X_tfidf_df.sort_values(by='Total', axis=1, inplace=True, ascending=False, na_position='last')
+    top_twenty = X_tfidf_df.iloc[:,:20].columns
+
+    return top_twenty
+
+def corpus_prepper(corpus: str) -> list:
+    jds = os.listdir(path=corpus)
+    print(jds)
+    return [corpus + jd for jd in jds]
+
+
+def jd_analyzer(jds):
+    unigrams = ngram_weighter(1,1,jds)
+    bigrams = ngram_weighter(2,2,jds)
+    trigrams = ngram_weighter(3,3,jds)
+    print('\nUnigrams\n')
+    for u in unigrams:
+        print(u)
+    print('\nBigrams\n')
+    for b in bigrams:
+        print(b)
+    print('\nTrigrams\n')
+    for t in trigrams:
+        print(t)
