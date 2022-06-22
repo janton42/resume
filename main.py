@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
-import utils
 import vars
 import time
 from datetime import date
@@ -24,66 +23,59 @@ import nltk
 import matplotlib
 
 from handlers.file_writer import PDF
-from handlers.file_parser import txt_parser, csv_to_df
-
+from handlers.file_parser import txt_parser, csv_to_df, corpus_prepper
+from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator
+from lang_processors.visualizations import chart_token_freq, chart_prepper, pos_finder, token_compiler
 from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 def main():
     # STEP 1
-    # Analyze a job description, and show the highest weighted ngrams
-    # so jobseekers can write tailored bullets
+    # Analyze a job description, and show the highest weighted one, two,
+    # and three word combinations,
+    # so jobseekers can write tailored bdullets
 
-    corpus = utils.corpus_prepper('./input/')
-    utils.jd_analyzer(corpus)
-    #
-    # utils.chartTokenFreq(jd_set)
+    # Path to folder containing job descriptions in .txt format
+    input_path = './input/'
+    output_path = './output/'
+    resume_filename = 'Jeff Stock_resume_4.pdf'
 
-    # resume_txt = utils.txtParser(vars.devFilesPath + 'clean_resume.txt')
-    # # workaround for removing non-latin characters
-    # decoded_resume_text = resume_txt.encode('latin-1', 'replace').decode('latin-1')
-    # create a chart of the top 20 most used verbs, adjectives, and
-    # nouns
-    # jd_verb_stems = utils.chartTokenFreq(jd_set)
-    # print(type(decoded_resume_text))
+    # Create a useable corpus of words for analysis from the input jds.
+    corpus = corpus_prepper(input_path)
 
-    # jd_parse_filenames = vars.ling_jd_filenames
-    # this is the type of simple corpus that scikit learn can use for count TFIDF
+    jd_analyzer(corpus)
+
+    # this is the type of simple corpus that scikit learn can use for
+    # count TFIDF
     jd_set = [txt_parser(filename) for filename in corpus]
-    # create an ordered list of verbs from job post(s)
-    # utils.chartTokenFreq(jd_set)
-    jd_verb_stems = utils.chartPrepper(jd_set,'VERB')[1]
-    jd_adj_stems = utils.chartPrepper(jd_set,'ADJ')[1]
-    jd_noun_stems = utils.chartPrepper(jd_set,'NOUN')[1]
+
+    # chart_token_freq(jd_set)
+
+    # create ordered lists of  each part of spech from job post(s)
+    jd_verb_stems = chart_prepper(jd_set,'VERB')[1]
+    jd_adj_stems = chart_prepper(jd_set,'ADJ')[1]
+    jd_noun_stems = chart_prepper(jd_set,'NOUN')[1]
 
     # get user input from a .csv file and convert into a pandas data frame
     user_input_filepath = './user_input/user_input.csv'
     user_input_df = csv_to_df(user_input_filepath)
-    # stem the verbs in user input resume bullet statements
-    # print('Calculating your verb strength...')
-    # time.sleep(2.0009)
-    user_input_df['verb_stems'] = [list(utils.posFinder(bullet, 'VERB').values()) for bullet in user_input_df['Bullet']]
-    user_input_df['verb_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_verb_stems) for stem_list in user_input_df['verb_stems']]
 
-    # # stem the adjectives in user input resume bullet statements
-    user_input_df['adj_stems'] = [list(utils.posFinder(bullet, 'ADJ').values()) for bullet in user_input_df['Bullet']]
-    user_input_df['adj_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_adj_stems) for stem_list in user_input_df['adj_stems']]
+    # stem the parts of speech in user input resume bullet statements
+    # VERBS
+    user_input_df['verb_stems'] = [list(pos_finder(bullet, 'VERB').values()) for bullet in user_input_df['Bullet']]
+    user_input_df['verb_strength_score'] = [bullet_strength_calculator(stem_list, jd_verb_stems) for stem_list in user_input_df['verb_stems']]
 
-    # stem the nouns in user input resume bullet statements
-    user_input_df['noun_stems'] = [list(utils.posFinder(bullet, 'NOUN').values()) for bullet in user_input_df['Bullet']]
-    user_input_df['noun_strength_score'] = [utils.bullet_strength_calculator(stem_list, jd_noun_stems) for stem_list in user_input_df['noun_stems']]
+    # ADJ
+    user_input_df['adj_stems'] = [list(pos_finder(bullet, 'ADJ').values()) for bullet in user_input_df['Bullet']]
+    user_input_df['adj_strength_score'] = [bullet_strength_calculator(stem_list, jd_adj_stems) for stem_list in user_input_df['adj_stems']]
+
+    # NOUNS
+    user_input_df['noun_stems'] = [list(pos_finder(bullet, 'NOUN').values()) for bullet in user_input_df['Bullet']]
+    user_input_df['noun_strength_score'] = [bullet_strength_calculator(stem_list, jd_noun_stems) for stem_list in user_input_df['noun_stems']]
     user_input_df['total_bullet_strength'] = (user_input_df['verb_strength_score'] + user_input_df['adj_strength_score'] + user_input_df['noun_strength_score'])
     bullet_strength_index_df = user_input_df[['Bullet','total_bullet_strength']]
-    # closest_roles_df = user_input_df[['Organization','Title','total_bullet_strength','iso_start_date','iso_end_date']]
-    # is_valuable = user_input_df['total_bullet_strength'] > 0
-    # is_work_exp = user_input_df['Type'] == 'Work'
-    # work_exp =  user_input_df[is_work_exp]
-    # valuable_experience = work_exp[is_valuable]
-    # value_exp_sorted = valuable_experience.sort_values(by=['iso_start_date','total_bullet_strength'], ascending=False)
-    # find current roles
-    # is_current = user_input_df['iso_end_date'] == 'None'
-    # current_roles = work_exp[is_current]
 
-
+    # Write the resume to a .pdf file
     pdf = PDF()
     pdf.alias_nb_pages()
     pdf.add_page()
@@ -95,12 +87,7 @@ def main():
     pdf.add_resume_section('Education', user_input_df)
 
     # TODO: Add skills section
-    pdf.output('./output/Jeff Stock_resume_DEMO.pdf', 'F')
-
-
-
-    # tokens = utils.tokenCompiler(vars.pm_jd_filenames, 'VERB')
-    # print(tokens[4])
+    pdf.output(output_path + resume_filename, 'F')
 
     #Juandale Pringle Windlebug the III has claimed ownership of this vessel
 

@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
-import utils
 import vars
 import time
 from datetime import date
@@ -52,7 +51,7 @@ class PDF(FPDF):
                 start_month = most_valuable_bullets['Start Month'].unique()[0]
             except:
                 most_valuable_bullets = role.sort_values(by='total_bullet_strength',ascending=False)
-                print(most_valuable_bullets)
+                # print(most_valuable_bullets)
 
         elif section_type == 'Leadership':
             most_valuable_bullets = role.sort_values(by='total_bullet_strength',ascending=False)
