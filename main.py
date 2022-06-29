@@ -17,7 +17,7 @@
 
 from handlers.file_writer import PDF
 from handlers.file_parser import txt_parser, csv_to_df, corpus_prepper
-from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator
+from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator, synonymizer
 from lang_processors.visualizations import chart_token_freq, chart_prepper, pos_finder, token_compiler
 
 def main():
@@ -65,7 +65,7 @@ def main():
     user_input_df['noun_strength_score'] = [bullet_strength_calculator(stem_list, jd_noun_stems) for stem_list in user_input_df['noun_stems']]
     user_input_df['total_bullet_strength'] = (user_input_df['verb_strength_score'] + user_input_df['adj_strength_score'] + user_input_df['noun_strength_score'])
     bullet_strength_index_df = user_input_df[['Bullet','total_bullet_strength']]
-    
+
     # Write the resume to a .pdf file
     pdf = PDF()
     pdf.alias_nb_pages()
@@ -82,5 +82,11 @@ def main():
 
     #Juandale Pringle Windlebug the III has claimed ownership of this vessel
 
+def verbinator():
+    strong_verbs = csv_to_df('./user_input/action_verbs.csv')
+    strong_verbs['synonyms'] = [synonymizer(word) for word in strong_verbs['Verb']]
+    print(strong_verbs)
+
+
 if __name__ == '__main__':
-    main()
+    verbinator()

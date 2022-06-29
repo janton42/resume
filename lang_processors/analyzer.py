@@ -24,6 +24,7 @@ import string
 import pandas as pd
 
 from nltk.tokenize import WhitespaceTokenizer
+from nltk.corpus import wordnet
 from sklearn.feature_extraction.text import TfidfVectorizer
 from vars import english_and_contextual_stops as stop_set
 
@@ -75,6 +76,14 @@ def bullet_strength_calculator(res_stem_list, jd_stem_list):
         if stem in jd_stem_list:
             count += 1
     return count
+
+
+def synonymizer(word: str)-> str:
+    synonyms = list()
+    for syn in wordnet.synsets(word):
+        for lem in syn.lemmas():
+            synonyms.append(lem.name())
+    return set(synonyms)
 
 # # data cleaning
 # def clean_data(text):
