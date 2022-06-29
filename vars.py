@@ -246,3 +246,16 @@ nonsense = [
     'degre',
     'equival'
     ]
+
+global_buzzwords = [
+    'Specialize',
+    'Experienced',
+    'Skilled',
+    'Leadership',
+    'Passionate',
+    'Expert',
+    'Motivated',
+    'Creative',
+    'Strategic',
+    'Focused'
+]
