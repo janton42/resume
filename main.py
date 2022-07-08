@@ -1,17 +1,17 @@
 # Resumationator helps tailor your resume to job posts.
-#
+
 # Copyright (C) 2022 Jeff Stock <jantonstock@gmail.com>
-#
+
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-#
+
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-#
+
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
@@ -34,12 +34,14 @@ def main():
     # Create a useable corpus of words for analysis from the input jds.
     corpus = corpus_prepper(input_path)
 
+    # Display key terms in one-, two-, and three-word combinations
     jd_analyzer(corpus)
 
-    # this is the type of simple corpus that scikit learn can use for
+    # Turn text from JDs into simple corpus that scikit learn uses for
     # count TFIDF
     jd_set = [txt_parser(filename) for filename in corpus]
 
+    # Make a chart showing keywords
     # chart_token_freq(jd_set)
 
     # create ordered lists of  each part of spech from job post(s)
@@ -67,26 +69,25 @@ def main():
     bullet_strength_index_df = user_input_df[['Bullet','total_bullet_strength']]
 
     # Write the resume to a .pdf file
-    pdf = PDF()
-    pdf.alias_nb_pages()
-    pdf.add_page()
-    # Add work experience section
-    pdf.add_resume_section('Work', user_input_df)
-    # Add leadership and activities section
-    pdf.add_resume_section('Leadership', user_input_df)
-    # TODO: Add Education
-    pdf.add_resume_section('Education', user_input_df)
+    option = input('Would you like to create a .pdf (y/n)? ')
+    if option == 'y':
+        pdf = PDF()
+        pdf.alias_nb_pages()
+        pdf.add_page()
+        # Add work experience section
+        pdf.add_resume_section('Work', user_input_df)
+        # Add leadership and activities section
+        pdf.add_resume_section('Leadership', user_input_df)
+        # TODO: Add Education
+        pdf.add_resume_section('Education', user_input_df)
 
-    # TODO: Add skills section
-    pdf.output(output_path + resume_filename, 'F')
+        # TODO: Add skills section
+        pdf.output(output_path + resume_filename, 'F')
 
-    #Juandale Pringle Windlebug the III has claimed ownership of this vessel
+        print('Your .pdf has been created.\nGood bye!\n')
+    else:
+        print("Juandale Pringle Windlebug the III has claimed ownership of this vessel")
 
-def verbinator():
-    strong_verbs = csv_to_df('./user_input/action_verbs.csv')
-    strong_verbs['synonyms'] = [synonymizer(word) for word in strong_verbs['Verb']]
-    print(strong_verbs)
-
-
+        # Juandale Pringle Windlebug the III has claimed ownership of this vessel
 if __name__ == '__main__':
-    verbinator()
+    main()

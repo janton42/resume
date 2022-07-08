@@ -137,3 +137,7 @@ api.py
 /input
 /output
 /user_input
+
+# Cherrytree stuff
+*.ctb
+
