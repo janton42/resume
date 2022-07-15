@@ -17,7 +17,7 @@
 
 from handlers.file_writer import PDF
 from handlers.file_parser import txt_parser, csv_to_df, corpus_prepper
-from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator, synonymizer
+from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator, synonymizer, bullet_length_comparison
 from lang_processors.visualizations import chart_token_freq, chart_prepper, pos_finder, token_compiler
 
 def main():
@@ -52,6 +52,10 @@ def main():
     # get user input from a .csv file and convert into a pandas data frame
     user_input_filepath = './user_input/user_input.csv'
     user_input_df = csv_to_df(user_input_filepath)
+
+    # add lengths of bullets
+    user_input_df['bullet_length'] = [bullet_length_comparison(bullet) for bullet in user_input_df['Bullet']]
+    
 
     # stem the parts of speech in user input resume bullet statements
     # VERBS

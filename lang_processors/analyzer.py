@@ -77,6 +77,12 @@ def bullet_strength_calculator(res_stem_list, jd_stem_list):
             count += 1
     return count
 
+def bullet_length_comparison(bullet):
+    high = 75 * 2
+    low = 50 * 2
+    
+    return 'Good' if len(bullet) < high and len(bullet) > low else 'Long'
+
 
 def synonymizer(word: str)-> str:
     synonyms = list()
