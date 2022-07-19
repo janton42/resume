@@ -80,11 +80,11 @@ def bullet_strength_calculator(res_stem_list, jd_stem_list):
 def bullet_length_comparison(bullet):
     high = 75 * 2
     low = 50 * 2
-    
+
     return 'Good' if len(bullet) < high and len(bullet) > low else 'Long'
 
 
-def synonymizer(word: str)-> str:
+def synonymizer(word: str)-> set:
     synonyms = list()
     for syn in wordnet.synsets(word):
         for lem in syn.lemmas():
