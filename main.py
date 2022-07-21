@@ -16,10 +16,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
 from handlers.file_writer import PDF
-from handlers.file_parser import txt_parser, csv_to_df, create_working_dict, corpus_prepper
-from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator, bullet_length_comparison
+from handlers.file_parser import txt_parser, csv_to_df, corpus_prepper, pdf_parser
+from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator, bullet_length_comparison, pos_tagger, starts_with_VBN, starts_strong
 from lang_processors.visualizations import chart_token_freq, chart_prepper, pos_finder, token_compiler
-from lang_processors.composer import synonymizer, create_text
+from lang_processors.composer import synonymizer, create_text, strong_syns
 
 def main():
     # STEP 1
@@ -28,7 +28,7 @@ def main():
     # so jobseekers can write tailored bdullets
 
     # Path to folder containing job descriptions in .txt format
-    input_path = './input/'
+    input_path = './input/jds/'
     output_path = './output/'
     resume_filename = 'Jeff Stock_resume_4.pdf'
 
@@ -36,12 +36,13 @@ def main():
     corpus = corpus_prepper(input_path)
 
     # Display key terms in one-, two-, and three-word combinations
-    jd_analyzer(corpus)
+    # jd_analyzer(corpus)
 
     # Turn text from JDs into simple corpus that scikit learn uses for
     # count TFIDF
     jd_set = [txt_parser(filename) for filename in corpus]
-
+    current_resume = pdf_parser('./input/Jeff Stock - Resume.pdf')
+    print(type(current_resume))
     # Make a chart showing keywords
     # chart_token_freq(jd_set)
 
@@ -57,16 +58,12 @@ def main():
     # add lengths of bullets
     user_input_df['bullet_length'] = [bullet_length_comparison(bullet) for bullet in user_input_df['Bullet']]
 
-    # fetch strong verbs
-    strong_verb_path = './user_input/action_verbs.csv'
-    strong_verbs_dict = create_working_dict(strong_verb_path)
-    print(strong_verbs_dict)
-    tester = ['restored', 'financed', 'developed','ate']
-    for test in tester:
-        if test in strong_verbs_dict:
-            print(True)
-        else:
-            print(False)
+    user_input_df['parts_of_speech'] = [pos_tagger(bullet) for bullet in user_input_df['Bullet']]
+    user_input_df['starts_with_VBN'] = [starts_with_VBN(pos_set) for pos_set in user_input_df['parts_of_speech']]
+
+    user_input_df['starts_strong'] = [starts_strong(bullet) for bullet in user_input_df['Bullet']]
+    user_input_df['strong_synonyms'] = [strong_syns(bullet) for bullet in user_input_df['Bullet']]
+
     # stem the parts of speech in user input resume bullet statements
     # VERBS
     user_input_df['verb_stems'] = [list(pos_finder(bullet, 'VERB').values()) for bullet in user_input_df['Bullet']]

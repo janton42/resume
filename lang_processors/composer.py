@@ -17,8 +17,11 @@
 
 import nltk
 
+from lang_processors.analyzer import pos_tagger
+from handlers.file_parser import csv_to_list
 from nltk.corpus import wordnet, treebank
 from nltk.text import Text
+from nltk import word_tokenize
 
 def show_tree(sentence: str)-> str:
     t = treebank.parsed_sents('sentence')
@@ -32,5 +35,19 @@ def synonymizer(word: str)-> set:
     return set(synonyms)
 
 def create_text(example):
-    base = Text(example)
-    return base
+    tokens = word_tokenize(example[0])
+    base = Text(tokens)
+    text = base.generate()
+    return text
+
+# return only strong synonmys for a given verb
+def strong_syns(sentence):
+    verb = sentence.split(' ')[0]
+
+    # fetch strong verbs
+    strong_verb_path = './user_input/action_verbs.csv'
+    strong_verbs_list = csv_to_list(strong_verb_path)
+
+    synonmys = synonymizer(verb)
+    strong = [syn for syn in synonmys if syn in strong_verbs_list]
+    return strong
