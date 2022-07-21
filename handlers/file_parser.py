@@ -1,4 +1,5 @@
 import os
+import csv
 import pandas as pd
 from PyPDF2 import PdfFileReader
 
@@ -26,7 +27,13 @@ def pdf_parser(filename, pageNumber):
 
 # takes in a .csv file and returns a pandas data frame object.
 def csv_to_df(filename):
-    csv_in = pd.read_csv(filename)
-    working = pd.DataFrame(csv_in)
+    df = pd.read_csv(filename)
 
-    return working
+    return df
+
+def create_working_dict(fileLocation):
+    compiled_list = csv.reader(open(fileLocation, mode='r', encoding='utf-8-sig'))
+    output = list()
+    for word in compiled_list:
+        output.append(word[0])
+    return output

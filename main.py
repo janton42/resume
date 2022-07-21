@@ -16,9 +16,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
 from handlers.file_writer import PDF
-from handlers.file_parser import txt_parser, csv_to_df, corpus_prepper
-from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator, synonymizer, bullet_length_comparison
+from handlers.file_parser import txt_parser, csv_to_df, create_working_dict, corpus_prepper
+from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator, bullet_length_comparison
 from lang_processors.visualizations import chart_token_freq, chart_prepper, pos_finder, token_compiler
+from lang_processors.composer import synonymizer, create_text
 
 def main():
     # STEP 1
@@ -55,8 +56,17 @@ def main():
 
     # add lengths of bullets
     user_input_df['bullet_length'] = [bullet_length_comparison(bullet) for bullet in user_input_df['Bullet']]
-    
 
+    # fetch strong verbs
+    strong_verb_path = './user_input/action_verbs.csv'
+    strong_verbs_dict = create_working_dict(strong_verb_path)
+    print(strong_verbs_dict)
+    tester = ['restored', 'financed', 'developed','ate']
+    for test in tester:
+        if test in strong_verbs_dict:
+            print(True)
+        else:
+            print(False)
     # stem the parts of speech in user input resume bullet statements
     # VERBS
     user_input_df['verb_stems'] = [list(pos_finder(bullet, 'VERB').values()) for bullet in user_input_df['Bullet']]
@@ -71,6 +81,7 @@ def main():
     user_input_df['noun_strength_score'] = [bullet_strength_calculator(stem_list, jd_noun_stems) for stem_list in user_input_df['noun_stems']]
     user_input_df['total_bullet_strength'] = (user_input_df['verb_strength_score'] + user_input_df['adj_strength_score'] + user_input_df['noun_strength_score'])
     bullet_strength_index_df = user_input_df[['Bullet','total_bullet_strength']]
+
 
     # Write the resume to a .pdf file
     option = input('Would you like to create a .pdf (y/n)? ')

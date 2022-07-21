@@ -24,7 +24,6 @@ import string
 import pandas as pd
 
 from nltk.tokenize import WhitespaceTokenizer
-from nltk.corpus import wordnet
 from sklearn.feature_extraction.text import TfidfVectorizer
 from vars import english_and_contextual_stops as stop_set
 
@@ -81,15 +80,8 @@ def bullet_length_comparison(bullet):
     high = 75 * 2
     low = 50 * 2
 
-    return 'Good' if len(bullet) < high and len(bullet) > low else 'Long'
+    return 'Good' if len(bullet) < high and len(bullet) > low else 'Bad'
 
-
-def synonymizer(word: str)-> set:
-    synonyms = list()
-    for syn in wordnet.synsets(word):
-        for lem in syn.lemmas():
-            synonyms.append(lem.name())
-    return set(synonyms)
 
 # # data cleaning
 # def clean_data(text):
