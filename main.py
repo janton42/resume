@@ -36,13 +36,13 @@ def main():
     corpus = corpus_prepper(input_path)
 
     # Display key terms in one-, two-, and three-word combinations
-    # jd_analyzer(corpus)
+    jd_analyzer(corpus)
 
     # Turn text from JDs into simple corpus that scikit learn uses for
     # count TFIDF
     jd_set = [txt_parser(filename) for filename in corpus]
-    current_resume = pdf_parser('./input/Jeff Stock - Resume.pdf')
-    print(type(current_resume))
+    # current_resume = pdf_parser('./input/Jeff Stock - Resume.pdf')
+    # print(type(current_resume))
     # Make a chart showing keywords
     # chart_token_freq(jd_set)
 
