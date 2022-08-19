@@ -1,6 +1,9 @@
 import os
+import csv
 import pandas as pd
-from PyPDF2 import PdfFileReader
+import PyPDF2
+
+from pdfminer.high_level import extract_text
 
 # Reads file names from a directory and makes a string with the relative
 # path to each file in a list.
@@ -16,17 +19,20 @@ def txt_parser(filename: str) -> list:
         return txtContents
 
 # pulls the text out of a pdf
-def pdf_parser(filename, pageNumber):
-        filePath = vars.devFilesPath + filename
-        with open(filePath,'rb') as file:
-            reader = PdfFileReader(file)
-            pdfContents = reader.getPage(pageNumber).extractText()
-            return pdfContents
+def pdf_parser(filepath):
+    text = extract_text(filepath)
+    return text
 
 
 # takes in a .csv file and returns a pandas data frame object.
 def csv_to_df(filename):
-    csv_in = pd.read_csv(filename)
-    working = pd.DataFrame(csv_in)
+    df = pd.read_csv(filename)
 
-    return working
+    return df
+
+def csv_to_list(file_location):
+    compiled_list = csv.reader(open(file_location, mode='r', encoding='utf-8-sig'))
+    output = list()
+    for word in compiled_list:
+        output.append(word[0])
+    return output

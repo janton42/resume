@@ -22,9 +22,10 @@ import re
 import string
 
 import pandas as pd
+from handlers.file_parser import csv_to_list
 
+from nltk import pos_tag, word_tokenize
 from nltk.tokenize import WhitespaceTokenizer
-from nltk.corpus import wordnet
 from sklearn.feature_extraction.text import TfidfVectorizer
 from vars import english_and_contextual_stops as stop_set
 
@@ -81,15 +82,23 @@ def bullet_length_comparison(bullet):
     high = 75 * 2
     low = 50 * 2
 
-    return 'Good' if len(bullet) < high and len(bullet) > low else 'Long'
+    return 'Good' if len(bullet) < high and len(bullet) > low else 'Bad'
+
+def pos_tagger(sentence: str):
+    return pos_tag(word_tokenize(sentence))
 
 
-def synonymizer(word: str)-> set:
-    synonyms = list()
-    for syn in wordnet.synsets(word):
-        for lem in syn.lemmas():
-            synonyms.append(lem.name())
-    return set(synonyms)
+def starts_with_VBN(pos_set):
+    return True if pos_set[0][1] == 'VBN' else False
+
+def starts_strong(sentence: str) -> bool:
+    words = word_tokenize(sentence)
+    start = words[0].lower()
+    # fetch strong verbs
+    strong_verb_path = './user_input/action_verbs.csv'
+    strong_verbs_list = csv_to_list(strong_verb_path)
+    return start in strong_verbs_list
+
 
 # # data cleaning
 # def clean_data(text):

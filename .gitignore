@@ -140,4 +140,6 @@ api.py
 
 # Cherrytree stuff
 *.ctb
-
+*.ctb~
+*.ctb~~
+*.ctb~~~

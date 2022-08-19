@@ -16,9 +16,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
 from handlers.file_writer import PDF
-from handlers.file_parser import txt_parser, csv_to_df, corpus_prepper
-from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator, synonymizer, bullet_length_comparison
+from handlers.file_parser import txt_parser, csv_to_df, corpus_prepper, pdf_parser
+from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator, bullet_length_comparison, pos_tagger, starts_with_VBN, starts_strong
 from lang_processors.visualizations import chart_token_freq, chart_prepper, pos_finder, token_compiler
+from lang_processors.composer import synonymizer, create_text, strong_syns
 
 def main():
     # STEP 1
@@ -27,7 +28,7 @@ def main():
     # so jobseekers can write tailored bdullets
 
     # Path to folder containing job descriptions in .txt format
-    input_path = './input/'
+    input_path = './input/jds/'
     output_path = './output/'
     resume_filename = 'Jeff Stock_resume_4.pdf'
 
@@ -40,7 +41,8 @@ def main():
     # Turn text from JDs into simple corpus that scikit learn uses for
     # count TFIDF
     jd_set = [txt_parser(filename) for filename in corpus]
-
+    # current_resume = pdf_parser('./input/Jeff Stock - Resume.pdf')
+    # print(type(current_resume))
     # Make a chart showing keywords
     # chart_token_freq(jd_set)
 
@@ -55,7 +57,12 @@ def main():
 
     # add lengths of bullets
     user_input_df['bullet_length'] = [bullet_length_comparison(bullet) for bullet in user_input_df['Bullet']]
-    
+
+    user_input_df['parts_of_speech'] = [pos_tagger(bullet) for bullet in user_input_df['Bullet']]
+    user_input_df['starts_with_VBN'] = [starts_with_VBN(pos_set) for pos_set in user_input_df['parts_of_speech']]
+
+    user_input_df['starts_strong'] = [starts_strong(bullet) for bullet in user_input_df['Bullet']]
+    user_input_df['strong_synonyms'] = [strong_syns(bullet) for bullet in user_input_df['Bullet']]
 
     # stem the parts of speech in user input resume bullet statements
     # VERBS
@@ -71,6 +78,7 @@ def main():
     user_input_df['noun_strength_score'] = [bullet_strength_calculator(stem_list, jd_noun_stems) for stem_list in user_input_df['noun_stems']]
     user_input_df['total_bullet_strength'] = (user_input_df['verb_strength_score'] + user_input_df['adj_strength_score'] + user_input_df['noun_strength_score'])
     bullet_strength_index_df = user_input_df[['Bullet','total_bullet_strength']]
+
 
     # Write the resume to a .pdf file
     option = input('Would you like to create a .pdf (y/n)? ')
