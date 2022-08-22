@@ -1,44 +1,45 @@
 Organization,Location,Start Month,Start Year,End Month,End Year,iso_start_date,iso_end_date,Title,Bullet,Type
-Upwork,"San Francisco / Remote, CA",Jan,2021,Apr,2022,2021-01-01,2022-04-01,"Program Manager, Data Analytics & Operations","Designed, led, and scaled an asynchronous, globally distributed team of analysts, auditors, and program administrators",Work
-Upwork,"San Francisco / Remote, CA",Jan,2021,Apr,2022,2021-01-01,2022-04-01,"Program Manager, Data Analytics & Operations","Led remote team of data analysts, program administrators and auditors",Work
-Upwork,"San Francisco / Remote, CA",Jan,2021,Apr,2022,2021-01-01,2022-04-01,"Program Manager, Data Analytics & Operations",Saved hundreds of manhours annually by automating audit and admin processes using Python and/or Javascript (Google App Script),Work
-Upwork,"San Francisco / Remote, CA",Jan,2021,Apr,2022,2021-01-01,2022-04-01,"Program Manager, Data Analytics & Operations","Developed and built processes for providing ad hoc reports and HR analytics dashboards in Looker, Data Studio and Google Sheets",Work
-Upwork,"San Francisco / Remote, CA",Jan,2021,Apr,2022,2021-01-01,2022-04-01,"Program Manager, Data Analytics & Operations","Designed and implemented processes for data handling, analysis and reporting; daily operations; special projects; process and compliance audits.",Work
-Upwork,"San Francisco / Remote, CA",Jan,2021,Apr,2022,2021-01-01,2022-04-01,"Program Manager, Data Analytics & Operations","Conducted statistical analysis to provide actionable insights, trends, and performance measurement. ",Work
-Upwork,"San Francisco / Remote, CA",Jan,2021,Apr,2022,2021-01-01,2022-04-01,"Program Manager, Data Analytics & Operations","Drove multiple cross-functional projects to: deliver timely, accurate data; audit internal processes, and transform stakeholder ideas into effective operations",Work
-Upwork,"San Francisco / Remote, CA",Jan,2021,Apr,2022,2021-01-01,2022-04-01,"Program Manager, Data Analytics & Operations","Conducted statistical analysis to provide actionable insights, trends, and performance measurement. ",Work
-Upwork,"San Francisco / Remote, CA",Jan,2020,Dec,2021,2020-01-01,2021-12-01,"Associate Program Manager, Contingent Workforce",Managed and executed company-wide education,Work
-Upwork,"San Francisco / Remote, CA",Jan,2020,Dec,2021,2020-01-01,2021-12-01,"Associate Program Manager, Contingent Workforce",Built a global pay rate converter using Python,Work
-Upwork,"San Francisco / Remote, CA",Jan,2020,Dec,2021,2020-01-01,2021-12-01,"Associate Program Manager, Contingent Workforce",Managed internal contingent workforce program with ~1700 contractors and $40 mil. annual spend,Work
-Upwork,"San Francisco / Remote, CA",Jan,2020,Dec,2021,2020-01-01,2021-12-01,"Associate Program Manager, Contingent Workforce",Owned data analysis of contingent workforce program metrics,Work
-Upwork,"San Francisco / Remote, CA",Jan,2020,Dec,2021,2020-01-01,2021-12-01,"Associate Program Manager, Contingent Workforce",Anticipated program needs through data analysis and interpretation of internal business needs and external marketplace trends,Work
-Upwork,"San Francisco / Remote, CA",Jan,2020,Dec,2021,2020-01-01,2021-12-01,"Associate Program Manager, Contingent Workforce","Increased operational efficiency ~18% by automating routine data handling, communication, and document creation processes.",Work
-Upwork,"San Francisco / Remote, CA",Jan,2020,Dec,2021,2020-01-01,2021-12-01,"Associate Program Manager, Contingent Workforce","Reduced inbound support requests ~7% by designing and building self-service information site for internal hiring managers using Google (sites, docs forms, sheets, presentations).",Work
-Upwork,"San Francisco / Remote, CA",Aug,2018,Dec,2019,2018-08-01,2019-12-01,Talent Innovation Specialist,Executed contingent worker classification decisions and other onboarding tasks,Work
-Upwork,"San Francisco / Remote, CA",Aug,2018,Dec,2019,2018-08-01,2019-12-01,Talent Innovation Specialist,"Supported multiple business units by providing timely, accurate data analysis and reporting",Work
-Upwork,"San Francisco / Remote, CA",Aug,2018,Dec,2019,2018-08-01,2019-12-01,Talent Innovation Specialist,Built  a disaster response system using Python,Work
-Upwork,"San Francisco / Remote, CA",Aug,2018,Dec,2019,2018-08-01,2019-12-01,Talent Innovation Specialist,Taught new employees how to use the platform for hiring and managing contractors,Work
-Upwork,"San Francisco / Remote, CA",Aug,2018,Dec,2019,2018-08-01,2019-12-01,Talent Innovation Specialist,"Designed, implemented, executed, and oversaw scalable processes for end-to-end management of internal contingent workforce program",Work
-Upwork,"San Francisco / Remote, CA",Aug,2018,Dec,2019,2018-08-01,2019-12-01,Talent Innovation Specialist,"Scaled processes and operations from pre-IPO, through fast-paced growth post-IPO, and continued high-speed growth into a large enterprise",Work
-Upwork,"San Francisco / Remote, CA",Dec,2017,Aug,2018,2017-12-01,2018-08-01,Account Executive,"Executed inside, B2B sales of Upwork Enterprise solution for small and medium sized businesses",Work
-Upwork,"San Francisco / Remote, CA",Dec,2017,Aug,2018,2017-12-01,2018-08-01,Account Executive,"105% Quota attainement Q1, 2018; 108% Quota attainement Q2 2018",Work
-Self Employed,"San Mateo, CA",Apr,2015,Present,None,2015-04-01,2035-05-01,Language Consultant,"Provided clear, accurate, timely translation of documents to clients worldwide",Work
-Self Employed,"San Mateo, CA",Apr,2015,Present,None,2015-04-01,2035-05-01,Language Consultant,"Machine translation post editing, translation review, and general translation editing",Work
-Self Employed,"San Mateo, CA",Apr,2022,Present,None,2022-04-01,2035-05-01,Language Consultant,Designed and built an application that tailors resumes to job posts using natural language processing (NLP),Work
-United States Marine Corps,"Jacksonville, NC / Darmstadt, Germany",Oct,2007,Sep,2010,2007-10-01,2010-10-01,Russian Interpreter,Provided consecutive and simultaneous interpretation during arms control treaty compliance investigations in NATO and former Soviet Union countires,Work
-United States Marine Corps,"Jacksonville, NC / Darmstadt, Germany",Oct,2007,Sep,2010,2007-10-01,2010-10-01,Russian Interpreter,Led multiple diplomatic and intelligence projects in close collaboration with cross-functional partners and executive stakeholders.,Work
-United States Marine Corps,"Jacksonville, NC / Darmstadt, Germany",Oct,2007,Sep,2010,2007-10-01,2010-10-01,Russian Interpreter,"Ensured effective communication between high-level military and government officials from ~50 different countries during numerous exercises, training events, and operations",Work
-United States Marine Corps,"Jacksonville, NC / Darmstadt, Germany",Nov,2001,Oct,2006,2001-11-01,2006-10-01,"Program Manager, Intelligence","Led a team of intelligence collectors, linguists, and analysts in Iraq during Operation Iraqi Freedom (II and III)",Work
-United States Marine Corps,"Jacksonville, NC / Darmstadt, Germany",Nov,2001,Oct,2006,2001-11-01,2006-10-01,"Program Manager, Intelligence",Developed operations plans and executed numerous projects,Work
-United States Marine Corps,"Jacksonville, NC / Darmstadt, Germany",Nov,2001,Oct,2006,2001-11-01,2006-10-01,"Program Manager, Intelligence","Developed systems and processes for effective comminication and intelligence collection operations in extremely high-pressure, fast-paced environments",Work
-United States Marine Corps,"Jacksonville, NC / Darmstadt, Germany",Nov,2001,Oct,2006,2001-11-01,2006-10-01,"Program Manager, Intelligence","Designed, built, and maintained end-to-end collection systems in highly mobile, rapidly-changing environments",Work
-United States Marine Corps,"Jacksonville, NC / Darmstadt, Germany",Nov,2001,Oct,2006,2001-11-01,2006-10-01,"Program Manager, Intelligence",Responsible for roughly $2+ million in government assets,Work
-"University of California, Berkeley","Berkeley, CA",Aug,2012,Jun,2015,2012-08-01,2015-06-01,BA - Linguistics,None,Education
-Defense Language Institute,"Monterey, CA",Apr,2002,Mar,2003,2002-04-01,2003-05-01,Russian Basic,None,Education
-Defense Language Institute,"Monterey, CA",May,2002,Apr,2003,2006-10-01,2007-10-01,Arms Control Speaking Proficiency,None,Education
-Defense Language Institute,"Monterey, CA",Jun,2010,Jun,2010,2010-06-01,2010-06-01,AA - Russian,None,Education
-Upwork Veterans Group,"Mountain View, CA",Jul,2018,Dec,2020,2018-07-01,2020-12-01,Co-founder/Chair,"Defined group vision, mission, and leadership roles and responsibilities",Leadership
-Upwork Veterans Group,"Mountain View, CA",Jul,2018,Dec,2020,2018-07-01,2020-12-01,Co-founder/Chair,"Collaborated with executive sponsor, group leaders, and leaders of other ERGs to orchestrate impactful events that defined Upwork's culture of diversity, inclusion, and belonging",Leadership
-Upwork Veterans Group,"Mountain View, CA",Jul,2018,Dec,2020,2018-07-01,2020-12-01,Co-founder/Chair,Allocated $25k annual budget,Leadership
-Cal Veterans Group,"Berkeley, CA",Sep,2013,May,2014,2013-09-01,2014-05-01,President,"Grew membership 4x by creating inclusive, welcoming environments and events",Leadership
-Cal Veterans Group,"Berkeley, CA",Sep,2013,May,2014,2013-09-01,2014-05-01,President,Oversaw leadership team,Leadership
+Portland City Grill/ Kincaids,Portland OR/ Burlingame CA,July,2021,Present,None,2021-07-01,None,Bartender/ Server,"Provide tableside and bartop services in an upscale fine dining establishment in downtown Portland, and bayside in Burlingame.",Work
+Portland City Grill/ Kincaids,Portland OR/ Burlingame CA,July,2021,Present,None,2021-07-01,None,Bartender/ Server,"Maintain working knowledge of Chef's specials, Wine list, cocktails and bar and dining menus.",Work
+Portland City Grill/ Kincaids,Portland OR/ Burlingame CA,July,2021,Present,None,2021-07-01,None,Bartender/ Server,Provide drinks for up to 500 guests in a shift while working at the service bar.,Work
+Portland City Grill/ Kincaids,Portland OR/ Burlingame CA,July,2021,Present,None,2021-07-01,None,Bartender/ Server,Adopt a personalized approach in providing excellent service to both regular and rotating guests.,Work
+Portland City Grill/ Kincaids,Portland OR/ Burlingame CA,July,2021,Present,None,2021-07-01,None,Bartender/ Server,Follow Covid sanitization and cleaning protocols.,Work
+Magic Inn ,"Portland, OR",July,2020,Jan,2022,2020-07-01,2022-01-01,Bartender,Provide friendly bartender service and self manage a neighborhood bar in Southeast Portland.,Work
+Magic Inn ,"Portland, OR",July,2020,Jan,2022,2020-07-01,2022-01-01,Bartender,Get to know and care for regular clients while building a following of new regular guests.,Work
+Magic Inn ,"Portland, OR",July,2020,Jan,2022,2020-07-01,2022-01-01,Bartender,Maintain a welcoming and clean environment for guests throughout COVID-19 times.,Work
+Magic Inn ,"Portland, OR",July,2020,Jan,2022,2020-07-01,2022-01-01,Bartender,"Create food and beverage menu,cook and manage kitchen, provide service at bar, table and lottery machines.",Work
+Casa Del Matador,"Portland, OR",July,2018,Jan,2020,2018-07-01,2020-01-01,Bartender,"Provide friendly and knowledgeable lunch, dinner, happy hour and late night bar service in a very fast paced tequila bar and Oaxacan themed restaurant.",Work
+Casa Del Matador,"Portland, OR",July,2018,Jan,2020,2018-07-01,2020-01-01,Bartender,Adhere to rigorous and stringent prep schedules.,Work
+Casa Del Matador,"Portland, OR",July,2018,Jan,2020,2018-07-01,2020-01-01,Bartender,"Master house craft cocktails, and maintain extensive knowledge of tequila and house recipes.",Work
+Casa Del Matador,"Portland, OR",July,2018,Jan,2020,2018-07-01,2020-01-01,Bartender,"Keep bar, dining and work areas welcoming and tidy.",Work
+Ranger Station,"Portland, OR",Dec,2016,May,2018,2018-07-01,2020-01-01,Bartender,"Master and create house craft cocktails, and maintain knowledge of classic and new cocktails.",Work
+Ranger Station,"Portland, OR",Dec,2016,May,2018,2018-07-01,2020-01-01,Bartender,Maintain liquor inventory.,Work
+Ranger Station,"Portland, OR",Dec,2016,May,2018,2018-07-01,2020-01-01,Bartender,"Mix and infuse juices, and liquors according to projected business.",Work
+Ranger Station,"Portland, OR",Dec,2016,May,2018,2018-07-01,2020-01-01,Bartender,"Keep bar, dining and work areas clean.",Work
+Ranger Station,"Portland, OR",Dec,2016,May,2018,2018-07-01,2020-01-01,Bartender,Provide full dinner service to guests throughout establishment.,Work
+Club Mallard/ Kona Club ,Albany CA,Sept,2015,Sept,2016,2015-09-01,2016-09-01,Bartender,"Maintain a fun, clean, and dynamic environment for new and regular guests.",Work
+Club Mallard/ Kona Club ,Albany CA,Sept,2015,Sept,2016,2015-09-01,2016-09-01,Bartender,"Provide entertaining, excellent full bar service in a high volume neighborhood pool room and locals bar.",Work
+Club Mallard/ Kona Club ,Albany CA,Sept,2015,Sept,2016,2015-09-01,2016-09-01,Bartender,Develop a popular seasonal cocktail menu and daily specials with colleagues.,Work
+Club Mallard/ Kona Club ,Albany CA,Sept,2015,Sept,2016,2015-09-01,2016-09-01,Bartender,Book and serve private events and cocktail parties.,Work
+Club Mallard/ Kona Club ,Albany CA,Sept,2015,Sept,2016,2015-09-01,2016-09-01,Bartender,Mix and infuse juices and alcohol for house cocktails Maintain working knowledge of local craft beers.,Work
+Club Mallard/ Kona Club ,Albany CA,Sept,2015,Sept,2016,2015-09-01,2016-09-01,Bartender,"Track inventory of alcohol, mixers, and bar supplies.",Work
+Belo Ultra Lounge,Vacaville CA,Feb,2013,May,2015,2013-02-01,2015--05-01,Bar Manager,Prepared and executed employee schedules for a staff of 20+ FOH employees.,Work
+Belo Ultra Lounge,Vacaville CA,Feb,2013,May,2015,2013-02-01,2015--05-01,Bar Manager,"Prepared mixed drinks; poured wine, beer and nonalcoholic beverages in a very high volume club and restaurant.",Work
+Belo Ultra Lounge,Vacaville CA,Feb,2013,May,2015,2013-02-01,2015--05-01,Bar Manager,"Successfully ran a number of promotions including a Blues Jam, EDM night, and a Service Industry Night to increase revenues and volume on slower days.",Work
+Belo Ultra Lounge,Vacaville CA,Feb,2013,May,2015,2013-02-01,2015--05-01,Bar Manager,"Maintain a working knowledge of specialty and standard cocktails, and craft beer.",Work
+Belo Ultra Lounge,Vacaville CA,Feb,2013,May,2015,2013-02-01,2015--05-01,Bar Manager,"Consistently created new cocktails, and house cocktail menus, and sold a very high volume.",Work
+"University of California, Berkeley",Berkeley CA,Aug,2013,Aug,2016,2013-08-01,2016-08-01,"BS - Nutrition Science, Physiology, and Metabolism",None,Education
+Solano Community College,Fairfield CA,Jun,2010,May,2013,2010-06-01,2013-05-01,AA -  General Science,None,Education
+Solano Community College,Fairfield CA,Jun,2010,May,2013,2010-06-01,2013-05-01,AA - Science and Quantitative Reasoning,None,Education
+Solano Community College,Fairfield CA,Jun,2010,May,2013,2010-06-01,2013-05-01,AA - Social Science,None,Education
+Solano Community College,Fairfield CA,Jun,2010,May,2013,2010-06-01,2013-05-01,AA - Liberal Studies,None,Education
+Haas Public Service Leader,Berkeley CA,Aug,2013,Aug,2016,2013-08-01,2016-08-01,Leader,None,Leadership
+Alternative Breaks,Berkeley CA,Aug,2013,Aug,2016,2013-08-01,2016-08-01,Leader,None,Leadership
+UC Men's Choral Ensemble,Berkeley CA,Aug,2013,Aug,2016,2013-08-01,2016-08-01,Manager,None,Leadership
+Suitcase Clinic,Berkeley CA,Aug,2013,Aug,2016,2013-08-01,2016-08-01,Case Manager,None,Leadership
+Phi Theta Kappa Honors Society,Fairfield CA,Jun,2010,May,2013,2010-06-01,2013-05-01,Member,None,Leadership
+Alpha Gamma Sigma Honors Society,Fairfield CA,Jun,2010,May,2013,2010-06-01,2013-05-01,Member,None,Leadership
+Solano Haiti Health and Education Partnership,Fairfield CA,Jun,2010,May,2013,2010-06-01,2013-05-01,Student Chairperson,None,Leadership
+American Medical Students Association,Fairfield CA,Jun,2010,May,2013,2010-06-01,2013-05-01,President,None,Leadership
+Math Engineering and Science Achievement,Fairfield CA,Jun,2010,May,2013,2010-06-01,2013-05-01,Program Officer,None,Leadership
+Society for Advancement of Chicano & Native American Scientists,Fairfield CA,Jun,2010,May,2013,2010-06-01,2013-05-01,President,None,Leadership

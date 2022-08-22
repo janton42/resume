@@ -61,15 +61,24 @@ def jd_analyzer(jds):
     unigrams = ngram_weighter(1,1,jds)
     bigrams = ngram_weighter(2,2,jds)
     trigrams = ngram_weighter(3,3,jds)
-    print('\nUnigrams\n')
-    for u in unigrams:
-        print(u)
-    print('\nBigrams\n')
-    for b in bigrams:
-        print(b)
-    print('\nTrigrams\n')
-    for t in trigrams:
-        print(t)
+    heading = 'Unigrams:\tBigrams:\t\tTrigrams:\n'
+    gram_count = 0
+    print(heading)
+    while gram_count < len(unigrams):
+        output_phrase = ''
+        # cover and alignment, that's my assignment
+        # tabs for unigram length
+        if (len(unigrams[gram_count]) < 8):
+            output_phrase = unigrams[gram_count] + '\t\t'
+        else:
+            output_phrase = unigrams[gram_count] + '\t'
+        # add bigrams and trigrams
+        if (len(bigrams[gram_count]) < 16):
+            output_phrase += bigrams[gram_count] + '\t\t' + trigrams[gram_count]
+        else:
+            output_phrase += bigrams[gram_count] + '\t' + trigrams[gram_count]
+        print(output_phrase)
+        gram_count += 1
 
 def bullet_strength_calculator(res_stem_list, jd_stem_list):
     count = 0

@@ -30,7 +30,7 @@ def main():
     # Path to folder containing job descriptions in .txt format
     input_path = './input/jds/'
     output_path = './output/'
-    resume_filename = 'Jeff Stock_resume_4.pdf'
+    resume_filename = 'Matthew Lloyd_resume_1.pdf'
 
     # Create a useable corpus of words for analysis from the input jds.
     corpus = corpus_prepper(input_path)
@@ -41,8 +41,10 @@ def main():
     # Turn text from JDs into simple corpus that scikit learn uses for
     # count TFIDF
     jd_set = [txt_parser(filename) for filename in corpus]
-    # current_resume = pdf_parser('./input/Jeff Stock - Resume.pdf')
-    # print(type(current_resume))
+    for jd in jd_set:
+        print(jd)
+    # current_resume = pdf_parser('./input/matthew_lloyd_resume.pdf')
+    # print(current_resume)
     # Make a chart showing keywords
     # chart_token_freq(jd_set)
 
@@ -90,7 +92,7 @@ def main():
         pdf.add_resume_section('Work', user_input_df)
         # Add leadership and activities section
         pdf.add_resume_section('Leadership', user_input_df)
-        # TODO: Add Education
+        # Add Education
         pdf.add_resume_section('Education', user_input_df)
 
         # TODO: Add skills section

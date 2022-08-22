@@ -24,7 +24,7 @@ from fpdf import FPDF
 
 class PDF(FPDF):
     def header(self):
-        self.person = vars.dev_person
+        self.person = vars.dev_person_2
         # self.image('./dev/visual/HiredLabs-Icon.png',x=91, y=8, h=7)
         # self.image('./dev/visual/HiredLabs-Icon.png',x=121, y=8, h=7)
         self.set_font('Arial','B', 12)

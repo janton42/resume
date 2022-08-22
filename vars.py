@@ -45,7 +45,15 @@ contextual_stops = [
     'new',
     'nextdoor',
     'across',
-    'strong'
+    'strong',
+    'skills',
+    'bosp',
+    'stanford',
+    'responsibilities',
+    'within',
+    'vpue',
+    'job'
+
     ]
 
 dry_run_1 = [
@@ -80,12 +88,20 @@ month_ints = {
     'DEC': 12
 }
 
-dev_person = {
+dev_person_1 = {
     'name': 'Jeff Stock',
     'email': 'JAntonStock@gmail.com',
     'location': 'San Mateo, CA',
     'linkedin': 'linkedin.com/in/stockj',
     'phone': '+1-707-301-8624'
+}
+
+dev_person_2 = {
+    'name': 'Matthew Lloyd',
+    'email': 'msplloyd@hotmail.com',
+    'location': 'Redwood City, CA',
+    'linkedin': 'linkedin.com/in/matthew-lloyd',
+    'phone': '+1-707-624-5847'
 }
 
 dev_jd_file_path = devFilesPath + 'raw_jd/'
