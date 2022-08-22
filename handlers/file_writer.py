@@ -150,3 +150,19 @@ class PDF(FPDF):
         self.set_y(-15)
         self.set_font('Arial', 'I', 8)
         self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
+
+
+def analysis_reporter(analysis,jds,title):
+    with open('./output/' + title,'a') as f:
+        f.write('Unigrams:\t\tBigrams:\t\tTrigrams:\n\n')
+        gram_count = 0
+        while gram_count < 20:
+            unigram = analysis['unigrams'][gram_count]
+            bigram = analysis['bigrams'][gram_count]
+            trigram = analysis['trigrams'][gram_count]
+            output_phrase = unigram + '\t\t' + bigram + '\t\t' + trigram + '\n'
+            f.write(output_phrase)
+            gram_count += 1
+        f.write('\n\nJob post(s):\n\n')
+        for jd in jds:
+            f.write(jd)

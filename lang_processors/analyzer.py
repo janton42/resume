@@ -20,6 +20,7 @@ import vars
 import nltk
 import re
 import string
+import datetime
 
 import pandas as pd
 from handlers.file_parser import csv_to_list
@@ -58,27 +59,12 @@ def ngram_weighter(lower_bound, upper_bound, filepath_list):
 
 
 def jd_analyzer(jds):
-    unigrams = ngram_weighter(1,1,jds)
-    bigrams = ngram_weighter(2,2,jds)
-    trigrams = ngram_weighter(3,3,jds)
-    heading = 'Unigrams:\tBigrams:\t\tTrigrams:\n'
-    gram_count = 0
-    print(heading)
-    while gram_count < len(unigrams):
-        output_phrase = ''
-        # cover and alignment, that's my assignment
-        # tabs for unigram length
-        if (len(unigrams[gram_count]) < 8):
-            output_phrase = unigrams[gram_count] + '\t\t'
-        else:
-            output_phrase = unigrams[gram_count] + '\t'
-        # add bigrams and trigrams
-        if (len(bigrams[gram_count]) < 16):
-            output_phrase += bigrams[gram_count] + '\t\t' + trigrams[gram_count]
-        else:
-            output_phrase += bigrams[gram_count] + '\t' + trigrams[gram_count]
-        print(output_phrase)
-        gram_count += 1
+    n_grams = {
+        'unigrams': ngram_weighter(1,1,jds),
+        'bigrams': ngram_weighter(2,2,jds),
+        'trigrams': ngram_weighter(3,3,jds)
+    }
+    return n_grams
 
 def bullet_strength_calculator(res_stem_list, jd_stem_list):
     count = 0
