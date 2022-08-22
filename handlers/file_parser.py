@@ -9,7 +9,6 @@ from pdfminer.high_level import extract_text
 # path to each file in a list.
 def corpus_prepper(corpus: str) -> list[str]:
     jds = os.listdir(path=corpus)
-    print(jds)
     return [corpus + jd for jd in jds]
 
 # pulls text from a .txt file

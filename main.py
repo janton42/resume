@@ -1,5 +1,4 @@
 # Resumationator helps tailor your resume to job posts.
-
 # Copyright (C) 2022 Jeff Stock <jantonstock@gmail.com>
 
 # This program is free software: you can redistribute it and/or modify
@@ -121,5 +120,4 @@ def main():
 
         # Juandale Pringle Windlebug the III has claimed ownership of this vessel
 if __name__ == '__main__':
-
     main()
