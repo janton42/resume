@@ -22,7 +22,6 @@ from lang_processors.visualizations import chart_token_freq, chart_prepper, pos_
 from lang_processors.composer import synonymizer, create_text, strong_syns
 
 def main():
-    
     # STEP 1
     # Analyze a job description, and show the highest weighted one, two,
     # and three word combinations,
@@ -85,7 +84,7 @@ def main():
 
 
     # Write the resume to a .pdf file
-    option = input('Would you like to create a .pdf (y/n)? ')
+    option = input('Create a .pdf (y/n)?')
     if option == 'y':
         pdf = PDF()
         pdf.alias_nb_pages()
@@ -122,4 +121,5 @@ def main():
 
         # Juandale Pringle Windlebug the III has claimed ownership of this vessel
 if __name__ == '__main__':
+
     main()
