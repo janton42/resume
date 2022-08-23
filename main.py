@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
-from handlers.file_writer import PDF, analysis_reporter
+from handlers.file_writer import analysis_reporter, write_resume
 from handlers.file_parser import txt_parser, csv_to_df, corpus_prepper, pdf_parser
 from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator, bullet_length_comparison, pos_tagger, starts_with_VBN, starts_strong
 from lang_processors.visualizations import chart_token_freq, chart_prepper, pos_finder, token_compiler
@@ -29,7 +29,7 @@ def main():
     # Path to folder containing job descriptions in .txt format
     input_path = './input/jds/'
     output_path = './output/'
-    resume_filename = 'Matthew Lloyd_resume_2.pdf'
+
 
     # Create a useable corpus of words for analysis from the input jds.
     corpus = corpus_prepper(input_path)
@@ -46,8 +46,6 @@ def main():
     # print(current_resume)
     # Make a chart showing keywords
     # chart_token_freq(jd_set)
-    analysis_reporter(analysis, jd_set, 'subj_2_keyword_analysis_3')
-    print('Analysis report genarated.')
     # create ordered lists of  each part of spech from job post(s)
     jd_verb_stems = chart_prepper(jd_set,'VERB')[1]
     jd_adj_stems = chart_prepper(jd_set,'ADJ')[1]
@@ -81,43 +79,17 @@ def main():
     user_input_df['total_bullet_strength'] = (user_input_df['verb_strength_score'] + user_input_df['adj_strength_score'] + user_input_df['noun_strength_score'])
     bullet_strength_index_df = user_input_df[['Bullet','total_bullet_strength']]
 
+    report_check = input('Generate analysis report (y/n)?\n\t')
 
-    # Write the resume to a .pdf file
-    option = input('Create a .pdf (y/n)?')
-    if option == 'y':
-        pdf = PDF()
-        pdf.alias_nb_pages()
-        pdf.add_page()
+    if report_check == 'y':
+        report_title = input('Enter an analysis report title:\n\t')
+        analysis_reporter(analysis, jd_set, report_title)
+        print('Analysis report genarated.')
 
-        top = input('Which section should go first, "Education"(1), or "Experience"(2)?')
-        leadership = input('Include "Leadership & Activities" section (y/n)?')
+    resume_check = input('Create resume (y/n)?')
+    
+    if resume_check == 'y':
+        write_resume(user_input_df)
 
-        if int(top) == 1:
-            # Add Education
-            pdf.add_resume_section('Education', user_input_df)
-            if leadership == 'y':
-                # Add leadership and activities section
-                pdf.add_resume_section('Leadership', user_input_df)
-            # Add work experience section
-            pdf.add_resume_section('Work', user_input_df)
-
-        elif int(top) == 2:
-            # Add work experience section
-            pdf.add_resume_section('Work', user_input_df)
-            if leadership == 'y':
-                # Add Education
-                pdf.add_resume_section('Education', user_input_df)
-            # Add leadership and activities section
-            pdf.add_resume_section('Leadership', user_input_df)
-
-
-        # TODO: Add skills section
-        pdf.output(output_path + resume_filename, 'F')
-
-        print('Your .pdf has been created.\nGood bye!\n')
-    else:
-        print("Juandale Pringle Windlebug the III has claimed ownership of this vessel")
-
-        # Juandale Pringle Windlebug the III has claimed ownership of this vessel
 if __name__ == '__main__':
     main()

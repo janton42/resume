@@ -151,7 +151,42 @@ class PDF(FPDF):
         self.set_font('Arial', 'I', 8)
         self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
 
+def write_resume(user_input_df):
+    resume_filename = input('Enter a resume file name:\n\t')
+    pdf = PDF()
+    pdf.alias_nb_pages()
+    pdf.add_page()
 
+    top = input('Which section should go first, "Education"(1), or "Experience"(2)?')
+    leadership = input('Include "Leadership & Activities" section (y/n)?')
+
+    if int(top) == 1:
+        # Add Education
+        pdf.add_resume_section('Education', user_input_df)
+        if leadership == 'y':
+            # Add leadership and activities section
+            pdf.add_resume_section('Leadership', user_input_df)
+        # Add work experience section
+        pdf.add_resume_section('Work', user_input_df)
+
+    elif int(top) == 2:
+        # Add work experience section
+        pdf.add_resume_section('Work', user_input_df)
+        if leadership == 'y':
+            # Add leadership and activities section
+            pdf.add_resume_section('Leadership', user_input_df)
+        # Add Education
+        pdf.add_resume_section('Education', user_input_df)
+
+
+
+    # TODO: Add skills section
+    pdf.output('./output/' + resume_filename, 'F')
+
+    print('Your .pdf has been created.\nGood bye!\n')
+    print("Juandale Pringle Windlebug the III has claimed ownership of this vessel")
+
+    # Juandale Pringle Windlebug the III has claimed ownership of this vessel
 def analysis_reporter(analysis,jds,title):
     with open('./output/' + title,'a') as f:
         f.write('Unigrams:\t\tBigrams:\t\tTrigrams:\n\n')
