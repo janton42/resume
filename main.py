@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
-from handlers.file_writer import analysis_reporter, write_resume
+from handlers.file_writer import analysis_reporter, jd_transcriber, write_resume
 from handlers.file_parser import txt_parser, csv_to_df, corpus_prepper, pdf_parser
+from handlers.webscraper import get_job_post
 from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator, bullet_length_comparison, pos_tagger, starts_with_VBN, starts_strong
 from lang_processors.visualizations import chart_token_freq, chart_prepper, pos_finder, token_compiler
 from lang_processors.composer import synonymizer, create_text, strong_syns
@@ -25,6 +26,9 @@ def main():
     # Analyze a job description, and show the highest weighted one, two,
     # and three word combinations,
     # so jobseekers can write tailored bdullets
+    jd_text = get_job_post()
+    jd_title = input('Enter a title for the job post text file:\n\t')
+    jd_transcriber(jd_text,jd_title)
 
     # Path to folder containing job descriptions in .txt format
     input_path = './input/jds/'
@@ -87,7 +91,7 @@ def main():
         print('Analysis report genarated.')
 
     resume_check = input('Create resume (y/n)?')
-    
+
     if resume_check == 'y':
         write_resume(user_input_df)
 

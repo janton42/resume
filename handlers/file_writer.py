@@ -201,3 +201,7 @@ def analysis_reporter(analysis,jds,title):
         f.write('\n\nJob post(s):\n\n')
         for jd in jds:
             f.write(jd)
+
+def jd_transcriber(jd_text,title):
+    with open('./input/jds/' + title + '.txt', 'a') as f:
+        f.write(jd_text)
