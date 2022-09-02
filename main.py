@@ -13,6 +13,7 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
+import os
 
 from handlers.file_writer import analysis_reporter, jd_transcriber, write_resume
 from handlers.file_parser import txt_parser, csv_to_df, corpus_prepper, pdf_parser
@@ -26,13 +27,24 @@ def main():
     # Analyze a job description, and show the highest weighted one, two,
     # and three word combinations,
     # so jobseekers can write tailored bdullets
+    upload_resume = input('Do you have a new resume to upload (y/n)?')
+    if upload_resume == 'y':
+        resume_folder = './input/resumes/raw/'
+        files = os.listdir(path=resume_folder)
+        print('Available files:\n')
+        if len(files) > 0:
+            for f in files:
+                print(f + '\n')
+        filename = input('Enter a your resume filename:\n\t')
+        current_resume = pdf_parser('./input/resumes/raw/' + filename + '.pdf')
+        print(current_resume)
+
     jd_text = get_job_post()
     jd_title = input('Enter a title for the job post text file:\n\t')
     jd_transcriber(jd_text,jd_title)
 
     # Path to folder containing job descriptions in .txt format
     input_path = './input/jds/'
-    output_path = './output/'
 
 
     # Create a useable corpus of words for analysis from the input jds.
@@ -46,7 +58,8 @@ def main():
     # Turn text from JDs into simple corpus that scikit learn uses for
     # count TFIDF
     jd_set = [txt_parser(filename) for filename in corpus]
-    # current_resume = pdf_parser('./input/matthew_lloyd_resume.pdf')
+
+    #
     # print(current_resume)
     # Make a chart showing keywords
     # chart_token_freq(jd_set)
@@ -56,7 +69,7 @@ def main():
     jd_noun_stems = chart_prepper(jd_set,'NOUN')[1]
 
     # get user input from a .csv file and convert into a pandas data frame
-    user_input_filepath = './user_input/user_input.csv'
+    user_input_filepath = './input/resumes/processed/user_input.csv'
     user_input_df = csv_to_df(user_input_filepath)
 
     # add lengths of bullets

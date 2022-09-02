@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 
+import os
 import vars
 import time
 from datetime import date
@@ -152,6 +153,18 @@ class PDF(FPDF):
         self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
 
 def write_resume(user_input_df):
+    resumes_folder = './output/resumes/'
+    # files = os.listdir(path=resumes_folder)
+    # if len(files) > 0:
+    #     for f in files:
+    #         try:
+    #             os.remove(resumes_folder + f)
+    #         except IsADirectoryError:
+    #             print(f + ' is a directory.')
+    #             pass
+    #         except FileNotFoundError:
+    #             print(f + ' not found.')
+    #             pass
     resume_filename = input('Enter a resume file name:\n\t')
     pdf = PDF()
     pdf.alias_nb_pages()
@@ -181,14 +194,26 @@ def write_resume(user_input_df):
 
 
     # TODO: Add skills section
-    pdf.output('./output/' + resume_filename, 'F')
+    pdf.output(resumes_folder + resume_filename, 'F')
 
     print('Your .pdf has been created.\nGood bye!\n')
     print("Juandale Pringle Windlebug the III has claimed ownership of this vessel")
 
     # Juandale Pringle Windlebug the III has claimed ownership of this vessel
 def analysis_reporter(analysis,jds,title):
-    with open('./output/' + title,'a') as f:
+    analysis_folder = './output/analysis_reports/'
+    # files = os.listdir(path=analysis_folder)
+    # if len(files) > 0:
+    #     for f in files:
+    #         try:
+    #             os.remove(analysis_folder + f)
+    #         except IsADirectoryError:
+    #             print(f + ' is a directory.')
+    #             pass
+    #         except FileNotFoundError:
+    #             print(f + ' not found.')
+    #             pass
+    with open(analysis_folder + title,'a') as f:
         f.write('Unigrams:\t\tBigrams:\t\tTrigrams:\n\n')
         gram_count = 0
         while gram_count < 20:
@@ -203,5 +228,18 @@ def analysis_reporter(analysis,jds,title):
             f.write(jd)
 
 def jd_transcriber(jd_text,title):
+    jd_folder = './input/jds/'
+    files = os.listdir(path=jd_folder)
+    if len(files) > 0:
+        for f in files:
+            try:
+                os.remove(jd_folder + f)
+            except IsADirectoryError:
+                print(f + ' is a directory.')
+                pass
+            except FileNotFoundError:
+                print(f + ' not found.')
+                pass
+
     with open('./input/jds/' + title + '.txt', 'a') as f:
         f.write(jd_text)
