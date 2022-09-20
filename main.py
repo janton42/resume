@@ -15,29 +15,29 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 import os
 
-from handlers.file_writer import analysis_reporter, jd_transcriber, write_resume
-from handlers.file_parser import txt_parser, csv_to_df, corpus_prepper, pdf_parser
+from handlers.file_writer import analysis_reporter, jd_transcriber,\
+write_resume
+from handlers.file_parser import txt_parser, csv_to_df, corpus_prepper,\
+ pdf_parser, upload_resume
 from handlers.webscraper import get_job_post
-from lang_processors.analyzer import jd_analyzer, bullet_strength_calculator, bullet_length_comparison, pos_tagger, starts_with_VBN, starts_strong
-from lang_processors.visualizations import chart_token_freq, chart_prepper, pos_finder, token_compiler
-from lang_processors.composer import synonymizer, create_text, strong_syns
+
+from lang_processors.analyzer import jd_analyzer,\
+bullet_strength_calculator, bullet_length_comparison, pos_tagger,\
+starts_with_VBN, starts_strong
+from lang_processors.visualizations import chart_token_freq,\
+ chart_prepper, pos_finder, token_compiler
+from lang_processors.composer import synonymizer, create_text, \
+strong_syns
 
 def main():
     # STEP 1
     # Analyze a job description, and show the highest weighted one, two,
     # and three word combinations,
     # so jobseekers can write tailored bdullets
-    upload_resume = input('Do you have a new resume to upload (y/n)?')
-    if upload_resume == 'y':
-        resume_folder = './input/resumes/raw/'
-        files = os.listdir(path=resume_folder)
-        print('Available files:\n')
-        if len(files) > 0:
-            for f in files:
-                print(f + '\n')
-        filename = input('Enter a your resume filename:\n\t')
-        current_resume = pdf_parser('./input/resumes/raw/' + filename + '.pdf')
-        print(current_resume)
+    upload_resume(input('Enter a filename: '))\
+     if input('Do you have a new resume to upload (y/n)?') == 'y'\
+      else 'Okay, no new resume.'
+
 
     jd_text = get_job_post()
     jd_title = input('Enter a title for the job post text file:\n\t')
@@ -68,33 +68,60 @@ def main():
     jd_adj_stems = chart_prepper(jd_set,'ADJ')[1]
     jd_noun_stems = chart_prepper(jd_set,'NOUN')[1]
 
-    # get user input from a .csv file and convert into a pandas data frame
+    # get user input from a .csv file and convert into a pandas
+    # data frame
     user_input_filepath = './input/resumes/processed/user_input.csv'
     user_input_df = csv_to_df(user_input_filepath)
 
     # add lengths of bullets
-    user_input_df['bullet_length'] = [bullet_length_comparison(bullet) for bullet in user_input_df['Bullet']]
+    user_input_df['bullet_length'] = [bullet_length_comparison(bullet)\
+     for bullet in user_input_df['Bullet']]
 
-    user_input_df['parts_of_speech'] = [pos_tagger(bullet) for bullet in user_input_df['Bullet']]
-    user_input_df['starts_with_VBN'] = [starts_with_VBN(pos_set) for pos_set in user_input_df['parts_of_speech']]
+    user_input_df['parts_of_speech'] = [pos_tagger(bullet)\
+     for bullet in user_input_df['Bullet']]
 
-    user_input_df['starts_strong'] = [starts_strong(bullet) for bullet in user_input_df['Bullet']]
-    user_input_df['strong_synonyms'] = [strong_syns(bullet) for bullet in user_input_df['Bullet']]
+    user_input_df['starts_with_VBN'] = [starts_with_VBN(pos_set)\
+     for pos_set in user_input_df['parts_of_speech']]
+
+    user_input_df['starts_strong'] = [starts_strong(bullet)
+     for bullet in user_input_df['Bullet']]
+
+    user_input_df['strong_synonyms'] = [strong_syns(bullet)
+     for bullet in user_input_df['Bullet']]
 
     # stem the parts of speech in user input resume bullet statements
     # VERBS
-    user_input_df['verb_stems'] = [list(pos_finder(bullet, 'VERB').values()) for bullet in user_input_df['Bullet']]
-    user_input_df['verb_strength_score'] = [bullet_strength_calculator(stem_list, jd_verb_stems) for stem_list in user_input_df['verb_stems']]
+    user_input_df['verb_stems'] =\
+     [list(pos_finder(bullet, 'VERB').values())\
+      for bullet in user_input_df['Bullet']]
+
+    user_input_df['verb_strength_score'] =\
+     [bullet_strength_calculator(stem_list, jd_verb_stems)\
+      for stem_list in user_input_df['verb_stems']]
 
     # ADJ
-    user_input_df['adj_stems'] = [list(pos_finder(bullet, 'ADJ').values()) for bullet in user_input_df['Bullet']]
-    user_input_df['adj_strength_score'] = [bullet_strength_calculator(stem_list, jd_adj_stems) for stem_list in user_input_df['adj_stems']]
+    user_input_df['adj_stems'] =\
+     [list(pos_finder(bullet, 'ADJ').values())\
+      for bullet in user_input_df['Bullet']]
+
+    user_input_df['adj_strength_score'] =\
+     [bullet_strength_calculator(stem_list, jd_adj_stems)\
+      for stem_list in user_input_df['adj_stems']]
 
     # NOUNS
-    user_input_df['noun_stems'] = [list(pos_finder(bullet, 'NOUN').values()) for bullet in user_input_df['Bullet']]
-    user_input_df['noun_strength_score'] = [bullet_strength_calculator(stem_list, jd_noun_stems) for stem_list in user_input_df['noun_stems']]
-    user_input_df['total_bullet_strength'] = (user_input_df['verb_strength_score'] + user_input_df['adj_strength_score'] + user_input_df['noun_strength_score'])
-    bullet_strength_index_df = user_input_df[['Bullet','total_bullet_strength']]
+    user_input_df['noun_stems'] =\
+     [list(pos_finder(bullet, 'NOUN').values())\
+      for bullet in user_input_df['Bullet']]
+    user_input_df['noun_strength_score'] =\
+     [bullet_strength_calculator(stem_list, jd_noun_stems)\
+      for stem_list in user_input_df['noun_stems']]
+    user_input_df['total_bullet_strength'] =\
+     (user_input_df['verb_strength_score'] +\
+      user_input_df['adj_strength_score'] +\
+       user_input_df['noun_strength_score'])
+
+    bullet_strength_index_df =\
+     user_input_df[['Bullet','total_bullet_strength']]
 
     report_check = input('Generate analysis report (y/n)?\n\t')
 

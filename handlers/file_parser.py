@@ -35,3 +35,8 @@ def csv_to_list(file_location):
     for word in compiled_list:
         output.append(word[0])
     return output
+
+def upload_resume(resume_filename):
+    resume_folder = './input/resumes/raw/'
+    current_resume = pdf_parser('./input/resumes/raw/' + resume_filename + '.pdf')
+    print(current_resume)
