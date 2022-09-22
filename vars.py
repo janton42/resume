@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>
 import nltk
+nltk.download('stopwords')
 
 eng_stop_words = nltk.corpus.stopwords.words('english')
 
