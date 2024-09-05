@@ -10,7 +10,7 @@ fpdf==1.7.2
 joblib==1.2.0
 kiwisolver==1.4.3
 matplotlib==3.5.2
-nltk==3.7
+nltk==3.9
 numpy==1.22.4
 packaging==21.3
 pandas==1.4.2
